@@ -1,0 +1,19 @@
+{
+  "name": "slider3d",
+  "main": "slider3d.js",
+  "version": "0.0.0",
+  "authors": [
+    "ChoiKyu Woo <apple@paio.co.kr>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.9.1"
+  }
+}
