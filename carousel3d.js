@@ -2,16 +2,6 @@
 
 
 /**
- * define Math.sign.
- */
-if (!Math.sign) {
-	Math.sign = Math.sign || function(n) {
-		return (n = +n) ? n < 0 ? -1 : 1 : n;
-	};
-}
-
-
-/**
  * Carousel3d
  */
 (function(factory) {
@@ -27,6 +17,7 @@ if (!Math.sign) {
 	'use strict';
 
 	/**
+	 * constructor
 	 * @param panel
 	 * @constructor
 	 */
@@ -47,25 +38,7 @@ if (!Math.sign) {
 
 
 	/**
-	 * default easing function.
-	 * @param x
-	 * @param t
-	 * @param b
-	 * @param c
-	 * @param d
-	 * @param s
-	 * @returns {*}
-	 */
-	Carousel3d.prototype.easing = function (x, t, b, c, d, s) {
-		if (t==0) return b;
-		if (t==d) return b+c;
-		if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-		return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
-	};
-
-
-	/**
-	 *
+	 * initializer
 	 * @param panel
 	 */
 	Carousel3d.prototype.init = function (panel) {
@@ -136,7 +109,7 @@ if (!Math.sign) {
 
 
     /**
-     *
+     * on panel resize
      * @param panel
      * @private
      */
@@ -154,25 +127,40 @@ if (!Math.sign) {
 	            + ' translateZ(' + r + 'px )';
             $(this.items[i]).css('transform', transformStyle);
         }
-        $(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)');
+		var transformStyle = 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)';
+        $(this.childrenWrapper).css('transform', transformStyle);
+		$(this.childrenWrapper).css('-ms-transform', transformStyle);
+		$(this.childrenWrapper).css('-moz-transform', transformStyle);
+		$(this.childrenWrapper).css('-webkit-transform', transformStyle);
+		$(this.childrenWrapper).css('-o-transform', transformStyle);
 	};
 
 
 	/**
-	 *
+	 * carousel spin left
 	 */
 	Carousel3d.prototype.left = function () {
         this.itemIndex += 1;
-		$(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)');
+		var transformStyle = 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)';
+		$(this.childrenWrapper).css('transform', transformStyle);
+		$(this.childrenWrapper).css('-ms-transform', transformStyle);
+		$(this.childrenWrapper).css('-moz-transform', transformStyle);
+		$(this.childrenWrapper).css('-webkit-transform', transformStyle);
+		$(this.childrenWrapper).css('-o-transform', transformStyle);
 	};
 
 
 	/**
-	 *
+	 * carousel spin right
 	 */
 	Carousel3d.prototype.right = function () {
         this.itemIndex -= 1;
-		$(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)');
+		var transformStyle = 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)';
+		$(this.childrenWrapper).css('transform', transformStyle);
+		$(this.childrenWrapper).css('-ms-transform', transformStyle);
+		$(this.childrenWrapper).css('-moz-transform', transformStyle);
+		$(this.childrenWrapper).css('-webkit-transform', transformStyle);
+		$(this.childrenWrapper).css('-o-transform', transformStyle);
 	};
 
 
@@ -205,18 +193,5 @@ if (!Math.sign) {
 	$(function() {
 		$('[data-carousel3d]').carousel3d();
 	});
-
-
-
-	/**
-	 *
-	 * @param degree
-	 * @returns {number}
-	 */
-	var degree2Radian = function (degree) {
-		var r = degree * Math.PI / 180.0;
-		r = Math.floor(degree) % 2 === 1 ? -r : r;
-		return Math.abs(Math.sin(r));
-	};
 
 }));
