@@ -74,6 +74,7 @@ if (!Math.sign) {
         //init panel
         this.panel = panel;
 		$(panel).css('position', 'relative');
+		$(panel).css('margin', 'auto');
         $(panel).css('perspective', '1000px');
 		$(panel).css('max-width', '100%');
 		$(panel).css('max-height', '100%');
@@ -111,6 +112,7 @@ if (!Math.sign) {
         $childrenWrapper.css('position', 'absolute');
         $childrenWrapper.css('width', '100%');
         $childrenWrapper.css('height', '100%');
+		$childrenWrapper.css('margin', 'auto');
         this.childrenWrapper = $childrenWrapper[0];
         $(panel).append($childrenWrapper);
 		$.each($(panel).find('[data-carousel3d-child]'), function (itemIndex, item) {
@@ -146,10 +148,13 @@ if (!Math.sign) {
         for (var i = 0; i < this.items.length; i += 1) {
             $(this.items[i]).children().first().css('max-width', maxWidth);
             $(this.items[i]).children().first().css('max-height', maxHeight);
+	        $(this.items[i]).css('left', ($(this.panel).width() - $(this.items[i]).width()) / 2 + 'px');
 
-            $(this.items[i]).css('transform', 'rotateY(   ' + (360 / this.items.length * i) + 'deg ) translateZ( ' + r + 'px )');
+	        var transformStyle = 'rotateY(   ' + (360 / this.items.length * i) + 'deg )'
+	            + ' translateZ(' + r + 'px )';
+            $(this.items[i]).css('transform', transformStyle);
         }
-        $(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) translateZ( ' + (-r) + 'px )');
+        $(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)');
 	};
 
 
@@ -158,7 +163,7 @@ if (!Math.sign) {
 	 */
 	Carousel3d.prototype.left = function () {
         this.itemIndex += 1;
-        $(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) translateZ( ' + (-this.r) + 'px )');
+		$(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)');
 	};
 
 
@@ -167,7 +172,7 @@ if (!Math.sign) {
 	 */
 	Carousel3d.prototype.right = function () {
         this.itemIndex -= 1;
-        $(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) translateZ( ' + (-this.r) + 'px )');
+		$(this.childrenWrapper).css('transform', 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)');
 	};
 
 
