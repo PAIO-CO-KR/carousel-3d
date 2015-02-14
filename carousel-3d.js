@@ -35,11 +35,8 @@
 
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
-            //$.extend(this, renderer);
-        } else if (Modernizr.csstransforms) {
-            $.extend(this, rendererTransform);
         } else {
-            $.extend(this, renderer);
+            $.extend(this, rendererPosition);
         }
 
         if (windowLoaded) {
@@ -55,6 +52,11 @@
 	};
 
 
+    /**
+     *
+     * @type {number}
+     * @private
+     */
     Carousel3d.prototype._aspectRatio = 2;
 
 
@@ -93,6 +95,13 @@
      */
     Carousel3d.prototype._children = null;
 
+    /**
+     *
+     * @type {number}
+     * @private
+     */
+    Carousel3d.prototype._currentIndex = 0;
+
 
 
 	/**
@@ -128,7 +137,7 @@
             $(wrapper).height(wrapperHeight);
             $(wrapper).css('left', (panelWidth - wrapperWidth) / 2);
             $(wrapper).css('top', (panelHeight - wrapperHeight) / 2);
-            this._initChildren();
+            this._initChildren(0);
 
             if (done) {
                 done();
@@ -138,45 +147,64 @@
         if (this._children) {
             $(this._children).each(function (index, child) {
                 $(child).css('position', 'absolute');
+                $(child).css('transition', '1s');
             }.bind(this));
         }
 	};
+
+    /**
+     * make carousel spin left
+     */
+    Carousel3d.prototype.left = function () {
+        this._currentIndex += 1;
+        this._initChildren(this._currentIndex * (360 / this._children.length));
+        console.log('left');
+    };
+
+    /**
+     * make carousel spin right
+     */
+    Carousel3d.prototype.right = function () {
+        this._currentIndex -= 1;
+        this._initChildren(this._currentIndex * (360 / this._children.length));
+    };
 
 
     /**
      * Renderer for legacy browsers no css transform, transform3d supports
      * @type {{_initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
      */
-    var renderer = {
-        _initChildren: function () {
+    var rendererPosition = {
+        _initChildren: function (degree) {
             if (this._children) {
                 $(this._children).each(function (index, child) {
-                    this._rotateChild(child, index, 0);
+                    this._rotateChild(child, index, degree);
                 }.bind(this));
             }
         },
-        _applyChildZIndex: function (child, index, degree) {
-            var childDegree = ((360 / this._children.length) * index) + degree;
-            $(child).css('z-index', (Math.cos(Math.PI / 180 * childDegree) + 1) * 10);
-        },
         _rotateChild: function (child, index, degree) {
             $(child).css('overflow', 'hidden');
-            var scale = 1;
+            var baseScale = 1;
             var width = $(child).width();
             var height = $(child).height();
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
             if ((width / height) > this._aspectRatio) {
-                scale = wrapperWidth / width;
+                baseScale = wrapperWidth / width;
             } else {
-                scale = wrapperHeight / height;
+                baseScale = wrapperHeight / height;
             }
-            $(child).width(width * scale);
-            $(child).height(height * scale);
-            $(child).css('left', (wrapperWidth - width * scale) / 2 + 'px');
-            $(child).css('top', (wrapperHeight - height * scale) / 2 + 'px');
 
-            this._applyChildZIndex(child, index, degree);
+            var childDegree = ((360 / this._children.length) * index) + degree;
+            var z = Math.cos(Math.PI / 180 * childDegree);
+            var dx = Math.sin(Math.PI / 180 * childDegree) * wrapperWidth / 5;
+            $(child).animate({
+                'z-index': (z + 1) * 10,
+                'width': width * baseScale * (z + 2) / 3,
+                'height': height * baseScale * (z + 2) / 3,
+                'left': (wrapperWidth - width * baseScale * (z + 2) / 3) / 2 + dx,
+                'top': (wrapperHeight - height * baseScale * (z + 2) / 3) / 2
+            }, 1000);
         }
     };
 
@@ -187,16 +215,15 @@
      */
     var renderer3DTransform = {
         _tz: 0,
-        _initChildren: function () {
+        _initChildren: function (degree) {
             var wrapperWidth = $(this._childrenWrapper).width();
             this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
             if (this._children) {
                 $(this._children).each(function (index, child) {
-                    this._rotateChild(child, index, 0);
+                    this._rotateChild(child, index, degree);
                 }.bind(this));
             }
         },
-        _applyChildZIndex: renderer._applyChildZIndex,
         _rotateChild: function (child, index, degree) {
             degree = degree ? degree : 0;
 
@@ -228,26 +255,10 @@
             transformText += ' translateZ(' + this._tz + 'px)';
             $(child).css('transform', transformText);
 
-            this._applyChildZIndex(child, index, degree);
+            $(child).css('z-index', (Math.cos(Math.PI / 180 * childDegree) + 1) * 10);
         }
     };
 
-
-
-
-
-	/**
-	 * carousel spin left
-	 */
-	Carousel3d.prototype.left = function () {
-	};
-
-
-	/**
-	 * carousel spin right
-	 */
-	Carousel3d.prototype.right = function () {
-	};
 
 
 
