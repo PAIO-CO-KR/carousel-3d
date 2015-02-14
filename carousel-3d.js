@@ -143,7 +143,10 @@
 	};
 
 
-
+    /**
+     * Renderer for legacy browsers no css transform, transform3d supports
+     * @type {{_initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
+     */
     var renderer = {
         _initChildren: function () {
             if (this._children) {
@@ -178,7 +181,11 @@
     };
 
 
-    var rendererTransform = {
+    /**
+     * Renderer for browsers supporting css transform3d
+     * @type {{_tz: number, _initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
+     */
+    var renderer3DTransform = {
         _tz: 0,
         _initChildren: function () {
             var wrapperWidth = $(this._childrenWrapper).width();
@@ -225,21 +232,6 @@
         }
     };
 
-
-    var renderer3DTransform = {
-        _tz: 0,
-        _initChildren: function () {
-            var wrapperWidth = $(this._childrenWrapper).width();
-            this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
-            if (this._children) {
-                $(this._children).each(function (index, child) {
-                    this._rotateChild(child, index, 0);
-                }.bind(this));
-            }
-        },
-        _applyChildZIndex: rendererTransform._applyChildZIndex,
-        _rotateChild: rendererTransform._rotateChild
-    };
 
 
 
