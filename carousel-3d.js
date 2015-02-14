@@ -104,7 +104,6 @@
 
         //init panel
         $(this._panel).css('position', 'relative');
-        $(this._panel).css('perspective', '1000px');
         $(this._panel).css('width', '100%');
         $(this._panel).css('height', '100%');
 
@@ -112,6 +111,7 @@
         $(this._rightButton).css('position', 'absolute');
 
         $(this._childrenWrapper).css('position', 'absolute');
+        $(this._childrenWrapper).css('perspective', '1000px');
         $(this._childrenWrapper).css('list-style-type', 'none');
         $(this._childrenWrapper).css('margin', '0px');
         $(this._childrenWrapper).css('padding', '0px');
@@ -152,6 +152,10 @@
                 }.bind(this));
             }
         },
+        _applyChildZIndex: function (child, index, degree) {
+            var childDegree = ((360 / this._children.length) * index) + degree;
+            $(child).css('z-index', (Math.cos(Math.PI / 180 * childDegree) + 1) * 10);
+        },
         _rotateChild: function (child, index, degree) {
             $(child).css('overflow', 'hidden');
             var scale = 1;
@@ -168,6 +172,8 @@
             $(child).height(height * scale);
             $(child).css('left', (wrapperWidth - width * scale) / 2 + 'px');
             $(child).css('top', (wrapperHeight - height * scale) / 2 + 'px');
+
+            this._applyChildZIndex(child, index, degree);
         }
     };
 
@@ -183,6 +189,7 @@
                 }.bind(this));
             }
         },
+        _applyChildZIndex: renderer._applyChildZIndex,
         _rotateChild: function (child, index, degree) {
             degree = degree ? degree : 0;
 
@@ -213,7 +220,8 @@
             transformText += ' rotateY(' + childDegree + 'deg)';
             transformText += ' translateZ(' + this._tz + 'px)';
             $(child).css('transform', transformText);
-            $(child).css('z-index', (Math.cos(Math.PI / 180 * childDegree) + 1) * 10);
+
+            this._applyChildZIndex(child, index, degree);
         }
     };
 
@@ -229,6 +237,7 @@
                 }.bind(this));
             }
         },
+        _applyChildZIndex: rendererTransform._applyChildZIndex,
         _rotateChild: rendererTransform._rotateChild
     };
 
