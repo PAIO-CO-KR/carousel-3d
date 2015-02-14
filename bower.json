@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "jquery": "~1.9.1",
-    "javascript-detect-element-resize": "~0.5.3"
+    "javascript-detect-element-resize": "~0.5.3",
+    "modernizr": "~2.8.3"
   }
 }

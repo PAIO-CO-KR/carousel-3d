@@ -7,11 +7,11 @@
 (function(factory) {
 	'use strict';
 	if (typeof define === 'function' && define.amd) {
-		define(['jquery'], factory);
+		define(['jquery', 'modernizr', 'jquery.resize'], factory);
 	} else if (typeof exports !== 'undefined') {
-		module.exports = factory(require('jquery'));
+		module.exports = factory(require('jquery'), require('modernizr'), require('jquery.resize'));
 	} else {
-		factory($);
+		factory($, Modernizr);
 	}
 }(function($) {
 	'use strict';
@@ -22,131 +22,223 @@
 	 * @constructor
 	 */
 	var Carousel3d = function (panel) {
-		this.init(panel);
+        this._panel = panel;
+        this._leftButton = $(panel).find('[data-carousel-3d-left]')[0];
+        this._rightButton = $(panel).find('[data-carousel-3d-right]')[0];
+        this._childrenWrapper = $(panel).find('[data-carousel-3d-children]')[0];
+        if (this._childrenWrapper) {
+            this._children = [];
+            $(this._childrenWrapper).children().each(function (index, child) {
+                this._children.push(child);
+            }.bind(this));
+        }
+
+        if (Modernizr.csstransforms3d) {
+            $.extend(this, renderer3DTransform);
+            //$.extend(this, renderer);
+        } else if (Modernizr.csstransforms) {
+            $.extend(this, rendererTransform);
+        } else {
+            $.extend(this, renderer);
+        }
+
+        if (windowLoaded) {
+            this._init();
+        } else {
+            $(this._panel).css('visibility', 'hidden');
+            $(window).load(function () {
+                this._init(function () {
+                    $(this._panel).css('visibility', 'visible');
+                }.bind(this));
+            }.bind(this));
+        }
 	};
 
 
-    Carousel3d.prototype.panel = null;
-    
-    Carousel3d.prototype.childrenWrapper = null;
+    Carousel3d.prototype._aspectRatio = 2;
 
-	Carousel3d.prototype.items = null;
 
-    Carousel3d.prototype.itemIndex = 0;
+    /**
+     *
+     * @type {null}
+     * @private
+     */
+    Carousel3d.prototype._panel = null;
 
-    Carousel3d.prototype.r = 0;
+    /**
+     *
+     * @type {null}
+     * @private
+     */
+    Carousel3d.prototype._leftButton = null;
+
+    /**
+     *
+     * @type {null}
+     * @private
+     */
+    Carousel3d.prototype._rightButton = null;
+
+    /**
+     *
+     * @type {null}
+     * @private
+     */
+    Carousel3d.prototype._childrenWrapper = null;
+
+    /**
+     *
+     * @type {null}
+     * @private
+     */
+    Carousel3d.prototype._children = null;
+
 
 
 	/**
 	 * initializer
 	 * @param panel
 	 */
-	Carousel3d.prototype.init = function (panel) {
+	Carousel3d.prototype._init = function (done) {
         var self = this;
 
         //init panel
-        this.panel = panel;
-		$(panel).css('position', 'relative');
-		$(panel).css('margin', 'auto');
-        $(panel).css('perspective', '1000px');
-		$(panel).css('max-width', '100%');
-		$(panel).css('max-height', '100%');
-		$(panel).css('width', '100%');
-		$(panel).css('height', '100%');
+        $(this._panel).css('position', 'relative');
+        $(this._panel).css('perspective', '1000px');
+        $(this._panel).css('width', '100%');
+        $(this._panel).css('height', '100%');
 
-        //init arrows
-        var $leftArrow = $('[data-carousel3d-left]');
-        var $rightArrow = $('[data-carousel3d-right]');
-        $leftArrow.css('position', 'absolute');
-        $leftArrow.css('z-index', 100);
-        $leftArrow.css('left', '0px');
-        $leftArrow.css('top', '50%');
-        $leftArrow.load(function () {
-            $leftArrow.css('margin-top', ($leftArrow.height() / -2) + 'px');
-        });
-        $rightArrow.css('position', 'absolute');
-        $rightArrow.css('z-index', 100);
-        $rightArrow.css('right', '0px');
-        $rightArrow.css('top', '50%');
-        $rightArrow.load(function () {
-            $rightArrow.css('margin-top', ($rightArrow.height() / -2) + 'px');
-        });
-        $leftArrow.click(function () {
-            this.left();
+        $(this._leftButton).css('position', 'absolute');
+        $(this._rightButton).css('position', 'absolute');
+
+        $(this._childrenWrapper).css('position', 'absolute');
+        $(this._childrenWrapper).css('list-style-type', 'none');
+        $(this._childrenWrapper).css('margin', '0px');
+        $(this._childrenWrapper).css('padding', '0px');
+        $(this._childrenWrapper).css('width', '100%');
+        $(this._childrenWrapper).css('height', '100%');
+
+        $(this._panel).resize(function () {
+            var wrapper = this._childrenWrapper;
+            var panelWidth = $(this._panel).width();
+            var panelHeight = $(this._panel).height();
+            var wrapperWidth = Math.min(panelHeight * this._aspectRatio, panelWidth);
+            var wrapperHeight = Math.min(wrapperWidth / this._aspectRatio, panelHeight);
+            $(wrapper).width(wrapperWidth);
+            $(wrapper).height(wrapperHeight);
+            $(wrapper).css('left', (panelWidth - wrapperWidth) / 2);
+            $(wrapper).css('top', (panelHeight - wrapperHeight) / 2);
+            this._initChildren();
+
+            if (done) {
+                done();
+            }
         }.bind(this));
-        $rightArrow.click(function () {
-            this.right();
-        }.bind(this));
 
-        //init children
-        var $childrenWrapper = $('<div data-carousel3d-wrapper />');
-        $childrenWrapper.css('transform-style', 'preserve-3d');
-        $childrenWrapper.css('transition', 'transform 1s');
-        $childrenWrapper.css('position', 'absolute');
-        $childrenWrapper.css('width', '100%');
-        $childrenWrapper.css('height', '100%');
-		$childrenWrapper.css('margin', 'auto');
-        this.childrenWrapper = $childrenWrapper[0];
-        $(panel).append($childrenWrapper);
-		$.each($(panel).find('[data-carousel3d-child]'), function (itemIndex, item) {
-            //wrap element with div.
-            var $div = $('<div data-carousel3d-child />');
-            $(item).removeAttr('data-carousel3d-child');
-            $childrenWrapper.append($div);
-            $div.append($(item));
-            item = $div[0];
-
-            $(item).css('position', 'absolute');
-            $(item).css('backface-visibility', 'hidden');
-		});
-        this.items = $(panel).find('[data-carousel3d-child]');
-
-        $(panel).resize(function () {
-            self._onPanelResize(this);
-        });
-	};
-
-
-
-    /**
-     * on panel resize
-     * @param panel
-     * @private
-     */
-	Carousel3d.prototype._onPanelResize = function (panel) {
-        var maxWidth = $(this.panel).width() / 2;
-        var maxHeight = $(this.panel).height();
-        var r = (maxWidth / 1.9) / Math.tan(Math.PI / this.items.length);
-        this.r = r;
-        for (var i = 0; i < this.items.length; i += 1) {
-            $(this.items[i]).children().first().css('max-width', maxWidth);
-            $(this.items[i]).children().first().css('max-height', maxHeight);
-	        $(this.items[i]).css('left', ($(this.panel).width() - $(this.items[i]).width()) / 2 + 'px');
-
-	        var transformStyle = 'rotateY(   ' + (360 / this.items.length * i) + 'deg )'
-	            + ' translateZ(' + r + 'px )';
-            $(this.items[i]).css('transform', transformStyle);
+        if (this._children) {
+            $(this._children).each(function (index, child) {
+                $(child).css('position', 'absolute');
+            }.bind(this));
         }
-		var transformStyle = 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)';
-        $(this.childrenWrapper).css('transform', transformStyle);
-		$(this.childrenWrapper).css('-ms-transform', transformStyle);
-		$(this.childrenWrapper).css('-moz-transform', transformStyle);
-		$(this.childrenWrapper).css('-webkit-transform', transformStyle);
-		$(this.childrenWrapper).css('-o-transform', transformStyle);
 	};
+
+
+
+    var renderer = {
+        _initChildren: function () {
+            if (this._children) {
+                $(this._children).each(function (index, child) {
+                    this._rotateChild(child, index, 0);
+                }.bind(this));
+            }
+        },
+        _rotateChild: function (child, index, degree) {
+            $(child).css('overflow', 'hidden');
+            var scale = 1;
+            var width = $(child).width();
+            var height = $(child).height();
+            var wrapperWidth = $(this._childrenWrapper).width();
+            var wrapperHeight = $(this._childrenWrapper).height();
+            if ((width / height) > this._aspectRatio) {
+                scale = wrapperWidth / width;
+            } else {
+                scale = wrapperHeight / height;
+            }
+            $(child).width(width * scale);
+            $(child).height(height * scale);
+            $(child).css('left', (wrapperWidth - width * scale) / 2 + 'px');
+            $(child).css('top', (wrapperHeight - height * scale) / 2 + 'px');
+        }
+    };
+
+
+    var rendererTransform = {
+        _tz: 0,
+        _initChildren: function () {
+            var wrapperWidth = $(this._childrenWrapper).width();
+            this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
+            if (this._children) {
+                $(this._children).each(function (index, child) {
+                    this._rotateChild(child, index, 0);
+                }.bind(this));
+            }
+        },
+        _rotateChild: function (child, index, degree) {
+            degree = degree ? degree : 0;
+
+            //scale, margin
+            var scale = 1;
+            var width = $(child).width();
+            var height = $(child).height();
+            var wrapperWidth = $(this._childrenWrapper).width();
+            var wrapperHeight = $(this._childrenWrapper).height();
+            if ((width / height) > this._aspectRatio) {
+                scale = wrapperWidth / width;
+            } else {
+                scale = wrapperHeight / height;
+            }
+            var scaledWidth = width * scale;
+            var scaledHeight = height * scale;
+
+            $(child).css('left', ((scaledWidth - width) / 2) + ((wrapperWidth - scaledWidth) / 2) + 'px');
+            $(child).css('top', ((scaledHeight - height) / 2) + ((wrapperHeight - scaledHeight) / 2) + 'px');
+
+            //rotation
+            $(child).data('index', index);
+            $(child).data('cssScale', scale);
+
+            var childDegree = ((360 / this._children.length) * index) + degree;
+            var transformText = 'scale(' + scale + ')';
+            transformText += ' translateZ(' + -this._tz + 'px)';
+            transformText += ' rotateY(' + childDegree + 'deg)';
+            transformText += ' translateZ(' + this._tz + 'px)';
+            $(child).css('transform', transformText);
+            $(child).css('z-index', (Math.cos(Math.PI / 180 * childDegree) + 1) * 10);
+        }
+    };
+
+
+    var renderer3DTransform = {
+        _tz: 0,
+        _initChildren: function () {
+            var wrapperWidth = $(this._childrenWrapper).width();
+            this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
+            if (this._children) {
+                $(this._children).each(function (index, child) {
+                    this._rotateChild(child, index, 0);
+                }.bind(this));
+            }
+        },
+        _rotateChild: rendererTransform._rotateChild
+    };
+
+
 
 
 	/**
 	 * carousel spin left
 	 */
 	Carousel3d.prototype.left = function () {
-        this.itemIndex += 1;
-		var transformStyle = 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)';
-		$(this.childrenWrapper).css('transform', transformStyle);
-		$(this.childrenWrapper).css('-ms-transform', transformStyle);
-		$(this.childrenWrapper).css('-moz-transform', transformStyle);
-		$(this.childrenWrapper).css('-webkit-transform', transformStyle);
-		$(this.childrenWrapper).css('-o-transform', transformStyle);
 	};
 
 
@@ -154,13 +246,6 @@
 	 * carousel spin right
 	 */
 	Carousel3d.prototype.right = function () {
-        this.itemIndex -= 1;
-		var transformStyle = 'rotateY(   ' + (360 / this.items.length * this.itemIndex * -1) + 'deg ) scale3d(0.7, 0.7, 0.7)';
-		$(this.childrenWrapper).css('transform', transformStyle);
-		$(this.childrenWrapper).css('-ms-transform', transformStyle);
-		$(this.childrenWrapper).css('-moz-transform', transformStyle);
-		$(this.childrenWrapper).css('-webkit-transform', transformStyle);
-		$(this.childrenWrapper).css('-o-transform', transformStyle);
 	};
 
 
@@ -190,8 +275,12 @@
 	/**
 	 * initialize on load
 	 */
-	$(function() {
-		$('[data-carousel3d]').carousel3d();
-	});
+    $(function () {
+        $('[data-carousel-3d]').carousel3d();
+    });
+    var windowLoaded = false;
+    $(window).load(function () {
+        windowLoaded = true;
+    });
 
 }));
