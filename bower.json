@@ -1,6 +1,6 @@
 {
-  "name": "slider3d",
-  "main": "slider3d.js",
+  "name": "slider-3d",
+  "main": "slider-3d.js",
   "version": "0.0.0",
   "authors": [
     "ChoiKyu Woo <apple@paio.co.kr>"
