@@ -259,14 +259,9 @@
     var renderer3DTransform = {
         _tz: 0,
         _rotateChildren: function (index) {
-            var degree = -index * (360 / this._children.length);
             var wrapperWidth = $(this._childrenWrapper).width();
             this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
-            if (this._children) {
-                $(this._children).each(function (index, child) {
-                    this._rotateChild(child, index, degree);
-                }.bind(this));
-            }
+            rendererTransform._rotateChildren.call(this, index);
         },
         _rotateChild: function (child, index, degree) {
             degree = degree ? degree : 0;
