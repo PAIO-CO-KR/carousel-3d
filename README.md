@@ -44,7 +44,7 @@ $('#myCarousel').carousel-3d('left');
 $('#myCarousel').carousel-3d('right');
 ```
 ## History
-### 0.0.3
+### 0.0.4
 * bug fix: not initialized on safari 8
  
 
