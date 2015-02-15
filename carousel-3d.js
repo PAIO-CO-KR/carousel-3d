@@ -140,6 +140,8 @@
 
         $(this._childrenWrapper).css('position', 'absolute');
         $(this._childrenWrapper).css('perspective', '1000px');
+        $(this._childrenWrapper).css('-moz-perspective', '1000px');
+        $(this._childrenWrapper).css('-webkit-perspective', '1000px');
         $(this._childrenWrapper).css('list-style-type', 'none');
         $(this._childrenWrapper).css('margin', '0px');
         $(this._childrenWrapper).css('padding', '0px');
@@ -154,6 +156,8 @@
             $(this._children).each(function (index, child) {
                 $(child).css('position', 'absolute');
                 $(child).css('transition', '1s');
+                $(child).css('-moz-transition', '1s');
+                $(child).css('-webkit-transition', '1s');
             }.bind(this));
         }
 
@@ -259,7 +263,11 @@
                         } else {
                             $(tween.elem).css('opacity', cos);
                             $(tween.elem).css('transform-origin', '0px 0px');
+                            $(tween.elem).css('-moz-transform-origin', '0px 0px');
+                            $(tween.elem).css('-webkit-transform-origin', '0px 0px');
                             $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
+                            $(tween.elem).css('-moz-transform', 'scale(' + widthScale + ', ' + heightScale + ')');
+                            $(tween.elem).css('-webkit-transform', 'scale(' + widthScale + ', ' + heightScale + ')');
                         }
                     }
                 }.bind(this)
@@ -305,6 +313,8 @@
             transformText += ' rotateY(' + childDegree + 'deg)';
             transformText += ' translateZ(' + this._tz * (1 / scale) * (1 + this._spacing) + 'px)';
             $(child).css('transform', transformText);
+            $(child).css('-moz-transform', transformText);
+            $(child).css('-webkit-transform', transformText);
 
             $(child).css('opacity', Math.cos(Math.PI / 180 * childDegree));
             $(child).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 100));
