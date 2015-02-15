@@ -41,7 +41,7 @@
         }
         else {
             $.extend(this, rendererTransform);
-            this._ieTransform = false;
+            this._ieTransform = true;
         }
 
         if (windowLoaded) {
@@ -118,6 +118,7 @@
 
         //init panel
         $(this._panel).css('position', 'relative');
+        $(this._panel).css('overflow', 'hidden');
         $(this._panel).css('width', '100%');
         $(this._panel).css('height', '100%');
 
@@ -267,12 +268,11 @@
             degree = degree ? degree : 0;
 
             //scale, margin
-            var scale = 1;
             var width = $(child).width();
             var height = $(child).height();
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
-            scale = (wrapperWidth / 2) / width;
+            var scale = (wrapperWidth / 2) / width;
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
