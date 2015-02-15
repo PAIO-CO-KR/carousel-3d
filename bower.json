@@ -1,6 +1,6 @@
 {
-  "name": "slider-3d",
-  "main": "slider-3d.js",
+  "name": "carousel-3d",
+  "main": "carousel-3d.js",
   "version": "0.0.2",
   "authors": [
     "KyuWoo Choi <apple@paio.co.kr>"
