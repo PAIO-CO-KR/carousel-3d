@@ -62,7 +62,10 @@
      * @type {number}
      * @private
      */
-    Carousel3d.prototype._aspectRatio = 2;
+    Carousel3d.prototype._aspectRatio = 1.5;
+
+
+    Carousel3d.prototype._spacing = 0.05;
 
 
     /**
@@ -273,7 +276,7 @@
             var height = $(child).height();
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
-            var scale = (wrapperWidth / 2) / width;
+            var scale = (wrapperWidth) / width;
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -287,9 +290,9 @@
             var childDegree = ((360 / this._children.length) * index) + degree;
             var transformText = '';
             transformText += ' scale(' + scale + ')';
-            transformText += ' translateZ(' + -this._tz * (0.5 / scale) + 'px)';
+            transformText += ' translateZ(' + -this._tz * (1 / scale) * (1 + this._spacing) + 'px)';
             transformText += ' rotateY(' + childDegree + 'deg)';
-            transformText += ' translateZ(' + this._tz * (0.5 / scale) + 'px)';
+            transformText += ' translateZ(' + this._tz * (1 / scale) * (1 + this._spacing) + 'px)';
             $(child).css('transform', transformText);
 
             $(child).css('opacity', Math.cos(Math.PI / 180 * childDegree));
