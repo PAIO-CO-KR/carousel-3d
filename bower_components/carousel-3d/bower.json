@@ -1,0 +1,26 @@
+{
+  "name": "slider-3d",
+  "main": "slider-3d.js",
+  "version": "0.0.2",
+  "authors": [
+    "KyuWoo Choi <apple@paio.co.kr>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "javascript-detect-element-resize": "~0.5.3",
+    "modernizr": "~2.8.3"
+  },
+  "homepage": "https://github.com/PAIO-CO-KR/carousel-3d",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
+  }
+}

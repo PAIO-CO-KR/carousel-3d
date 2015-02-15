@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+    <script src="bower_components/modernizr/modernizr.js"></script>
+    <script src="carousel-3d.js" ></script>
+
+    <style type="text/css">
+        html, body {
+            height: 100%;
+        }
+        #wrapper {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrapper">
+    <div data-carousel-3d >
+        <img src="./images/left.png" data-carousel-3d-left />
+        <img src="./images/right.png" data-carousel-3d-right />
+        <ul data-carousel-3d-children>
+            <li><img src="./images/castles-616573_640.jpg" /></li>
+            <li selected><img src="./images/cup-617422_640.jpg" /></li>
+            <li><img src="./images/dart-444201_640.jpg" /></li>
+            <li><img src="./images/fresh-peppers-619132_640.jpg" /></li>
+            <li><img src="./images/keyboard-621830_640.jpg" /></li>
+            <li><img src="./images/landscape-540122_640.jpg" /></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>
