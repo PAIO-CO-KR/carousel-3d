@@ -35,8 +35,13 @@
 
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
-        } else {
+        }
+        else if (Modernizr.csstransforms) {
             $.extend(this, rendererTransform);
+        }
+        else {
+            $.extend(this, rendererTransform);
+            this._ieTransform = false;
         }
 
         if (windowLoaded) {
@@ -196,6 +201,7 @@
      * @type {{_initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
      */
     var rendererTransform = {
+        _ieTransform: false,
         _rotateChildren: function (index) {
             var degree = index * (360 / this._children.length);
             if (this._children) {
@@ -228,20 +234,19 @@
                         var dx = Math.sin(Math.PI / 180 * now) * wrapperWidth / 2;
                         var heightScale = baseScale * (cos + 1) / 2;
                         var widthScale = baseScale * Math.abs(cos) * heightScale;
-                        //TODO refactor this out to constructor scope.
-                        if (Modernizr.csstransforms) {
-                            $(tween.elem).css('transform-origin', '0px 0px');
-                            $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
-                        } else {
+                        if (this._ieTransform) {
                             $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
                             $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
+                        } else {
+                            $(tween.elem).css('transform-origin', '0px 0px');
+                            $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
                         }
 
                         $(tween.elem).css('z-index', Math.floor((cos + 1) * 10));
                         $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
                         $(tween.elem).css('left', ((wrapperWidth - width * widthScale) / 2 + dx) + 'px');
                     }
-                }
+                }.bind(this)
             });
         }
     };
