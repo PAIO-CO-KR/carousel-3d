@@ -35,8 +35,9 @@
 
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
+            //$.extend(this, rendererTransform);
         } else {
-            $.extend(this, rendererPosition);
+            $.extend(this, rendererTransform);
         }
 
         if (windowLoaded) {
@@ -118,6 +119,10 @@
 
         $(this._leftButton).css('position', 'absolute');
         $(this._rightButton).css('position', 'absolute');
+        $(this._leftButton).css('z-index', 1000);
+        $(this._rightButton).css('z-index', 1000);
+        $(this._leftButton).css('left', '0px');
+        $(this._rightButton).css('right', '0px');
 
         $(this._childrenWrapper).css('position', 'absolute');
         $(this._childrenWrapper).css('perspective', '1000px');
@@ -137,6 +142,12 @@
             $(wrapper).height(wrapperHeight);
             $(wrapper).css('left', (panelWidth - wrapperWidth) / 2);
             $(wrapper).css('top', (panelHeight - wrapperHeight) / 2);
+            if (this._children) {
+                $(this._children).each(function (index, child) {
+                    $(child).data('width', $(child).width());
+                    $(child).data('height', $(child).height());
+                }.bind(this));
+            }
             this._initChildren(0);
 
             if (done) {
@@ -150,6 +161,13 @@
                 $(child).css('transition', '1s');
             }.bind(this));
         }
+
+        $(this._leftButton).click(function () {
+            this.left();
+        }.bind(this));
+        $(this._rightButton).click(function () {
+            this.right();
+        }.bind(this));
 	};
 
     /**
@@ -158,7 +176,6 @@
     Carousel3d.prototype.left = function () {
         this._currentIndex += 1;
         this._initChildren(this._currentIndex * (360 / this._children.length));
-        console.log('left');
     };
 
     /**
@@ -171,10 +188,10 @@
 
 
     /**
-     * Renderer for legacy browsers no css transform, transform3d supports
+     * Renderer for browsers supporting css transform including ie8
      * @type {{_initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
      */
-    var rendererPosition = {
+    var rendererTransform = {
         _initChildren: function (degree) {
             if (this._children) {
                 $(this._children).each(function (index, child) {
@@ -185,8 +202,8 @@
         _rotateChild: function (child, index, degree) {
             $(child).css('overflow', 'hidden');
             var baseScale = 1;
-            var width = $(child).width();
-            var height = $(child).height();
+            var width = $(child).data('width');
+            var height = $(child).data('height');
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
             if ((width / height) > this._aspectRatio) {
@@ -196,15 +213,26 @@
             }
 
             var childDegree = ((360 / this._children.length) * index) + degree;
-            var z = Math.cos(Math.PI / 180 * childDegree);
-            var dx = Math.sin(Math.PI / 180 * childDegree) * wrapperWidth / 5;
             $(child).animate({
-                'z-index': (z + 1) * 10,
-                'width': width * baseScale * (z + 2) / 3,
-                'height': height * baseScale * (z + 2) / 3,
-                'left': (wrapperWidth - width * baseScale * (z + 2) / 3) / 2 + dx,
-                'top': (wrapperHeight - height * baseScale * (z + 2) / 3) / 2
-            }, 1000);
+                '_degree': childDegree
+            }, {
+                duration: 1000,
+                step: function (now, tween) {
+                    if (tween.prop === '_degree') {
+                        var cos = Math.cos(Math.PI / 180 * now);
+                        var dx = Math.sin(Math.PI / 180 * now) * wrapperWidth / 2;
+                        var heightScale = baseScale * (cos + 1) / 2;
+                        var widthScale = baseScale * Math.abs(cos) * heightScale;
+                        $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
+                        $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
+                        $(tween.elem).css('transform-origin', '0px 0px');
+                        $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
+                        $(tween.elem).css('z-index', Math.floor((cos + 1) * 10));
+                        $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
+                        $(tween.elem).css('left', ((wrapperWidth - width * widthScale) / 2 + dx) + 'px');
+                    }
+                }
+            });
         }
     };
 
@@ -255,7 +283,7 @@
             transformText += ' translateZ(' + this._tz + 'px)';
             $(child).css('transform', transformText);
 
-            $(child).css('z-index', (Math.cos(Math.PI / 180 * childDegree) + 1) * 10);
+            $(child).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 10));
         }
     };
 
