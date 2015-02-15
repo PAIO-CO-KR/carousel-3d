@@ -35,7 +35,6 @@
 
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
-            //$.extend(this, rendererTransform);
         } else {
             $.extend(this, rendererTransform);
         }
@@ -146,9 +145,12 @@
                 $(this._children).each(function (index, child) {
                     $(child).data('width', $(child).width());
                     $(child).data('height', $(child).height());
+                    if ($(child).attr('selected')) {
+                        this._currentIndex = index;
+                    }
                 }.bind(this));
             }
-            this._initChildren(0);
+            this._rotateChildren(this._currentIndex);
 
             if (done) {
                 done();
@@ -175,7 +177,7 @@
      */
     Carousel3d.prototype.left = function () {
         this._currentIndex += 1;
-        this._initChildren(this._currentIndex * (360 / this._children.length));
+        this._rotateChildren(this._currentIndex);
     };
 
     /**
@@ -183,7 +185,7 @@
      */
     Carousel3d.prototype.right = function () {
         this._currentIndex -= 1;
-        this._initChildren(this._currentIndex * (360 / this._children.length));
+        this._rotateChildren(this._currentIndex);
     };
 
 
@@ -192,7 +194,8 @@
      * @type {{_initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
      */
     var rendererTransform = {
-        _initChildren: function (degree) {
+        _rotateChildren: function (index) {
+            var degree = index * (360 / this._children.length);
             if (this._children) {
                 $(this._children).each(function (index, child) {
                     this._rotateChild(child, index, degree);
@@ -243,7 +246,8 @@
      */
     var renderer3DTransform = {
         _tz: 0,
-        _initChildren: function (degree) {
+        _rotateChildren: function (index) {
+            var degree = index * (360 / this._children.length);
             var wrapperWidth = $(this._childrenWrapper).width();
             this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
             if (this._children) {
