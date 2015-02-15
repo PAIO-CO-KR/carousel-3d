@@ -1,4 +1,4 @@
-# carousel-3d
+# [carousel-3d](http://paio-co-kr.github.io/carousel-3d) : jquery plugin 3D carousel
 
 A simple 3D carousel widget.
 It supports all major browsers including IE8,9 with best effort. Full 3D effect requires `css transform3d` support browsers. 
