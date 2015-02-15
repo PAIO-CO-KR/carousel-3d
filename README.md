@@ -11,6 +11,16 @@ It supports all major browsers including IE8,9 with best effort. Full 3D effect 
 
 `bower install carousel-3d`
 
+## Dependencies
+carousel-3d requires some modules. `jquery`, `javascript-detect-element-resize`, `modernizr`.
+You will need to include those scripts before carousel-3d.js in html page or load it with requirejs or browserify as carousel-3d comes with UMD style module definition.
+```html
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="carousel-3d.js" ></script>
+```
+
 ## Code Example
 * Adding `data-carousel-3d` attribute on any element will be rendered as carousel.
 * Create a list and items with `data-carousel-3d-children` attribute on list tag. All items on that list will be arranged on 3D position.
