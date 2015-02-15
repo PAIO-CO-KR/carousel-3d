@@ -235,17 +235,18 @@
                         var dx = Math.sin(Math.PI / 180 * now) * wrapperWidth / 2;
                         var heightScale = baseScale * (cos + 1) / 2;
                         var widthScale = baseScale * Math.abs(cos) * heightScale;
+
+                        $(tween.elem).css('z-index', Math.floor((cos + 1) * 100));
+                        $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
+                        $(tween.elem).css('left', ((wrapperWidth - width * widthScale) / 2 + dx) + 'px');
                         if (this._ieTransform) {
-                            $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
-                            $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
+                            $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand"), progid:DXImageTransform.Microsoft.Alpha(Opacity=' + cos * 100 + ')');
+                            $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand"), progid:DXImageTransform.Microsoft.Alpha(Opacity=' + cos * 100 + ')');
                         } else {
+                            $(tween.elem).css('opacity', cos);
                             $(tween.elem).css('transform-origin', '0px 0px');
                             $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
                         }
-
-                        $(tween.elem).css('z-index', Math.floor((cos + 1) * 10));
-                        $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
-                        $(tween.elem).css('left', ((wrapperWidth - width * widthScale) / 2 + dx) + 'px');
                     }
                 }.bind(this)
             });
@@ -289,10 +290,10 @@
             transformText += ' translateZ(' + -this._tz * (0.5 / scale) + 'px)';
             transformText += ' rotateY(' + childDegree + 'deg)';
             transformText += ' translateZ(' + this._tz * (0.5 / scale) + 'px)';
-
             $(child).css('transform', transformText);
 
-            $(child).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 10));
+            $(child).css('opacity', Math.cos(Math.PI / 180 * childDegree));
+            $(child).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 100));
         }
     };
 
