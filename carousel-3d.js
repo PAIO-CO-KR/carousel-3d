@@ -183,7 +183,7 @@
      * make carousel spin left
      */
     Carousel3d.prototype.left = function () {
-        this._currentIndex += 1;
+        this._currentIndex -= 1;
         this._rotateChildren(this._currentIndex);
     };
 
@@ -191,7 +191,7 @@
      * make carousel spin right
      */
     Carousel3d.prototype.right = function () {
-        this._currentIndex -= 1;
+        this._currentIndex += 1;
         this._rotateChildren(this._currentIndex);
     };
 
@@ -203,7 +203,7 @@
     var rendererTransform = {
         _ieTransform: false,
         _rotateChildren: function (index) {
-            var degree = index * (360 / this._children.length);
+            var degree = -index * (360 / this._children.length);
             if (this._children) {
                 $(this._children).each(function (index, child) {
                     this._rotateChild(child, index, degree);
@@ -259,7 +259,7 @@
     var renderer3DTransform = {
         _tz: 0,
         _rotateChildren: function (index) {
-            var degree = index * (360 / this._children.length);
+            var degree = -index * (360 / this._children.length);
             var wrapperWidth = $(this._childrenWrapper).width();
             this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
             if (this._children) {
