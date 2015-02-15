@@ -272,11 +272,7 @@
             var height = $(child).height();
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
-            if ((width / height) > this._aspectRatio) {
-                scale = wrapperWidth / width;
-            } else {
-                scale = wrapperHeight / height;
-            }
+            scale = (wrapperWidth / 2) / width;
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -288,10 +284,12 @@
             $(child).data('cssScale', scale);
 
             var childDegree = ((360 / this._children.length) * index) + degree;
-            var transformText = 'scale(' + scale + ')';
-            transformText += ' translateZ(' + -this._tz + 'px)';
+            var transformText = '';
+            transformText += ' scale(' + scale + ')';
+            transformText += ' translateZ(' + -this._tz * (0.5 / scale) + 'px)';
             transformText += ' rotateY(' + childDegree + 'deg)';
-            transformText += ' translateZ(' + this._tz + 'px)';
+            transformText += ' translateZ(' + this._tz * (0.5 / scale) + 'px)';
+
             $(child).css('transform', transformText);
 
             $(child).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 10));
