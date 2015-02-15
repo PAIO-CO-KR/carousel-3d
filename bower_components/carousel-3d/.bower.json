@@ -1,7 +1,7 @@
 {
-  "name": "slider-3d",
-  "main": "slider-3d.js",
-  "version": "0.0.2",
+  "name": "carousel-3d",
+  "main": "carousel-3d.js",
+  "version": "0.0.4",
   "authors": [
     "KyuWoo Choi <apple@paio.co.kr>"
   ],
@@ -23,14 +23,14 @@
     "type": "git",
     "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
   },
-  "_release": "0.0.2",
+  "_release": "0.0.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.2",
-    "commit": "7d6f8374f50b5eaf6174170ecd6818cf886c268e"
+    "tag": "0.0.4",
+    "commit": "721de7d81b6a4640be66dd35504dee0356e711ea"
   },
   "_source": "git://github.com/PAIO-CO-KR/carousel-3d.git",
-  "_target": "~0.0.2",
+  "_target": "~0.0.4",
   "_originalSource": "carousel-3d",
   "_direct": true
 }
