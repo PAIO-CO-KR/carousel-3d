@@ -49,9 +49,8 @@
         } else {
             $(this._panel).css('visibility', 'hidden');
             $(window).load(function () {
-                this._init(function () {
-                    $(this._panel).css('visibility', 'visible');
-                }.bind(this));
+                this._init();
+                $(this._panel).css('visibility', 'visible');
             }.bind(this));
         }
 	};
@@ -127,7 +126,7 @@
         //init panel
         $(this._panel).css('position', 'relative');
         $(this._panel).css('overflow', 'hidden');
-        $(this._panel).css('width', '100%');
+        $(this._panel).css('width', '99%');
         $(this._panel).css('height', '100%');
 
         $(this._leftButton).css('position', 'absolute');
@@ -147,31 +146,9 @@
         $(this._childrenWrapper).css('width', '100%');
         $(this._childrenWrapper).css('height', '100%');
 
-        $(this._panel).resize(function () {
-            var wrapper = this._childrenWrapper;
-            var panelWidth = $(this._panel).width();
-            var panelHeight = $(this._panel).height();
-            var wrapperWidth = Math.min(panelHeight * this._aspectRatio, panelWidth);
-            var wrapperHeight = Math.min(wrapperWidth / this._aspectRatio, panelHeight);
-            $(wrapper).width(wrapperWidth);
-            $(wrapper).height(wrapperHeight);
-            $(wrapper).css('left', (panelWidth - wrapperWidth) / 2);
-            $(wrapper).css('top', (panelHeight - wrapperHeight) / 2);
-            if (this._children) {
-                $(this._children).each(function (index, child) {
-                    $(child).data('width', $(child).width());
-                    $(child).data('height', $(child).height());
-                    if ($(child).attr('selected')) {
-                        this._currentIndex = index;
-                    }
-                }.bind(this));
-            }
-            this._rotateChildren(this._currentIndex);
-
-            if (done) {
-                done();
-            }
-        }.bind(this));
+        $(this._panel).resize(this._resize.bind(this));
+        //TODO safari doesn't call resize for the first time. work around. fix this later.
+        $(this._panel).css('width', '100%');
 
         if (this._children) {
             $(this._children).each(function (index, child) {
@@ -186,6 +163,8 @@
         $(this._rightButton).click(function () {
             this.right();
         }.bind(this));
+
+        //done();
 	};
 
     /**
@@ -201,6 +180,33 @@
      */
     Carousel3d.prototype.right = function () {
         this._currentIndex += 1;
+        this._rotateChildren(this._currentIndex);
+    };
+
+
+    /**
+     *
+     * @private
+     */
+    Carousel3d.prototype._resize = function () {
+        var wrapper = this._childrenWrapper;
+        var panelWidth = $(this._panel).width();
+        var panelHeight = $(this._panel).height();
+        var wrapperWidth = Math.min(panelHeight * this._aspectRatio, panelWidth);
+        var wrapperHeight = Math.min(wrapperWidth / this._aspectRatio, panelHeight);
+        $(wrapper).width(wrapperWidth);
+        $(wrapper).height(wrapperHeight);
+        $(wrapper).css('left', (panelWidth - wrapperWidth) / 2);
+        $(wrapper).css('top', (panelHeight - wrapperHeight) / 2);
+        if (this._children) {
+            $(this._children).each(function (index, child) {
+                $(child).data('width', $(child).width());
+                $(child).data('height', $(child).height());
+                if ($(child).attr('selected')) {
+                    this._currentIndex = index;
+                }
+            }.bind(this));
+        }
         this._rotateChildren(this._currentIndex);
     };
 
