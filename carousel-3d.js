@@ -120,6 +120,8 @@
         $(this._rightButton).css('position', 'absolute');
         $(this._leftButton).css('z-index', 1000);
         $(this._rightButton).css('z-index', 1000);
+        $(this._leftButton).css('top', '50%');
+        $(this._rightButton).css('top', '50%');
         $(this._leftButton).css('left', '0px');
         $(this._rightButton).css('right', '0px');
 
@@ -226,10 +228,15 @@
                         var dx = Math.sin(Math.PI / 180 * now) * wrapperWidth / 2;
                         var heightScale = baseScale * (cos + 1) / 2;
                         var widthScale = baseScale * Math.abs(cos) * heightScale;
-                        $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
-                        $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
-                        $(tween.elem).css('transform-origin', '0px 0px');
-                        $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
+                        //TODO refactor this out to constructor scope.
+                        if (Modernizr.csstransforms) {
+                            $(tween.elem).css('transform-origin', '0px 0px');
+                            $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
+                        } else {
+                            $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
+                            $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand")');
+                        }
+
                         $(tween.elem).css('z-index', Math.floor((cos + 1) * 10));
                         $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
                         $(tween.elem).css('left', ((wrapperWidth - width * widthScale) / 2 + dx) + 'px');
