@@ -65,6 +65,11 @@
     Carousel3d.prototype._aspectRatio = 1.5;
 
 
+    /**
+     *
+     * @type {number}
+     * @private
+     */
     Carousel3d.prototype._spacing = 0.05;
 
 
