@@ -53,6 +53,10 @@ You can rotate carousel with code below.
 $('#myCarousel').carousel-3d('left');
 $('#myCarousel').carousel-3d('right');
 ```
+## TODO
+* fix IE8,9 transform.
+* add item on select event
+
 ## History
 ### 0.0.4
 * bug fix: not initialized on safari 8
