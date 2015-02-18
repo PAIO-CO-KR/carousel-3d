@@ -2,6 +2,14 @@
 
 A simple 3D carousel widget.
 It supports all major browsers including IE8,9 with best effort. Full 3D effect requires `css transform3d` support browsers. 
+And this widget works with not only _**images**_ but any _**html elements**_ as child.
+
+## Supports
+* IE8~ (full 3D requires IE10~)
+* Chrome
+* Safari
+* Firefox
+* Opera
 
 ## Demo
 
@@ -45,6 +53,22 @@ You will need to include those scripts before carousel-3d.js in html page or loa
         </ul>
     </div>
 </div>
+```
+
+* You will also want html document as child.
+
+```html
+<li>
+    <div>
+    <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
+    <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
+    <div>The quick brown fox jumps over the lazy dog</div>
+    <p>
+    Make the fox
+    <button type="button" onclick="alert('Jump!!');">jump</button>
+    </p>
+    </div>
+</li>
 ```
 The Carousel will have parents 100% width & height. so you will want wrap the div with appropriate size. And wide aspect(150%) is recommanded to show 3D rotating effect.
 
