@@ -269,10 +269,14 @@
                 duration: this._animateDuration,
                 step: function (now, tween) {
                     if (tween.prop === '_degree') {
+                        var sin = Math.sin(Math.PI / 180 * now);
                         var cos = Math.cos(Math.PI / 180 * now);
-                        var dx = Math.sin(Math.PI / 180 * now) * wrapperWidth / 2;
+                        var halfDegreeRange = 360 / this._children.length / 2;
+                        var perspectiveScale = Math.abs(Math.sin(Math.PI / 180 * (now + halfDegreeRange)) - Math.sin(Math.PI / 180 * (now - halfDegreeRange)))
+                            / (Math.sin(Math.PI / 180 * halfDegreeRange) * 2) * cos;
                         var heightScale = baseScale * (cos + 1) / 2;
-                        var widthScale = baseScale * Math.abs(cos) * heightScale;
+                        var widthScale = baseScale * perspectiveScale;
+                        var dx = sin * wrapperWidth / 2 + (width * widthScale / 2 * sin);
 
                         $(tween.elem).css('z-index', Math.floor((cos + 1) * 100));
                         $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
@@ -376,5 +380,17 @@
     $(window).load(function () {
         windowLoaded = true;
     });
+
+
+    /**
+     * Math.sign shim
+     */
+    if (!Math.sign) {
+        Math.sign = function (value) {
+            var number = +value;
+            if (number === 0) { return number; }
+            return number < 0 ? -1 : 1;
+        }
+    }
 
 }));
