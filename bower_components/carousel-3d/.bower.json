@@ -1,7 +1,7 @@
 {
   "name": "carousel-3d",
   "main": "carousel-3d.js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "authors": [
     "KyuWoo Choi <apple@paio.co.kr>"
   ],
@@ -23,14 +23,14 @@
     "type": "git",
     "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
   },
-  "_release": "0.0.4",
+  "_release": "0.0.5",
   "_resolution": {
     "type": "version",
-    "tag": "0.0.4",
-    "commit": "721de7d81b6a4640be66dd35504dee0356e711ea"
+    "tag": "0.0.5",
+    "commit": "cf4baa54b73ac917af3f747969571d5d8ede1953"
   },
   "_source": "git://github.com/PAIO-CO-KR/carousel-3d.git",
-  "_target": "~0.0.4",
+  "_target": "~0.0.5",
   "_originalSource": "carousel-3d",
   "_direct": true
 }

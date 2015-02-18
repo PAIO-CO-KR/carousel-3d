@@ -1,4 +1,4 @@
-# carousel-3d
+# [carousel-3d](http://paio-co-kr.github.io/carousel-3d) : jquery plugin 3D carousel
 
 A simple 3D carousel widget.
 It supports all major browsers including IE8,9 with best effort. Full 3D effect requires `css transform3d` support browsers. 
@@ -10,6 +10,16 @@ It supports all major browsers including IE8,9 with best effort. Full 3D effect 
 ## Installation
 
 `bower install carousel-3d`
+
+## Dependencies
+carousel-3d requires some modules. `jquery`, `javascript-detect-element-resize`, `modernizr`.
+You will need to include those scripts before carousel-3d.js in html page or load it with requirejs or browserify as carousel-3d comes with UMD style module definition.
+```html
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="carousel-3d.js" ></script>
+```
 
 ## Code Example
 * Adding `data-carousel-3d` attribute on any element will be rendered as carousel.
@@ -38,13 +48,27 @@ The Carousel will have parents 100% width & height. so you will want wrap the di
 
 You can have multiple carousels with no effort. Just set proper attribues.
 ## API Reference
-You can rotate carousel with code below.
+* Rotate carousel
 ```javascript
 $('#myCarousel').carousel-3d('left');
 $('#myCarousel').carousel-3d('right');
 ```
+* Event listener
+```javascript
+$('#myCarousel').on('select', function (evt, index) {
+    console.log('item selected : ' + index);
+});
+```
+
+
+## TODO
+* fix IE8,9 transform.
+
 ## History
-### 0.0.3
+### 0.0.5
+* added 'select' event
+
+### 0.0.4
 * bug fix: not initialized on safari 8
  
 

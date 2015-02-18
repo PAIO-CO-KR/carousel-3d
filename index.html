@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
 
     <style type="text/css">
-        #wrapper {
+        .carousel-wrapper {
             width: 100%;
             height: 300px;
         }
@@ -52,26 +52,71 @@
 
 <p>It supports all major browsers including IE8,9 with best effort. Full 3D effect requires `css transform3d` support browsers.</p>
 
-<div id="wrapper">
+<div class="carousel-wrapper">
     <div data-carousel-3d >
         <img src="./bower_components/carousel-3d/images/left.png" data-carousel-3d-left />
         <img src="./bower_components/carousel-3d/images/right.png" data-carousel-3d-right />
         <ul data-carousel-3d-children>
             <li><img src="./bower_components/carousel-3d/images/castles-616573_640.jpg" /></li>
             <li selected><img src="./bower_components/carousel-3d/images/cup-617422_640.jpg" /></li>
-            <li><img src="./bower_components/carousel-3d/images/dart-444201_640.jpg" /></li>
+            <li>
+                <div>
+                    <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
+                    <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
+                    <div>The quick brown fox jumps over the lazy dog</div>
+                    <p>
+                        Make the fox
+                        <button type="button" onclick="alert('Jump!!');">jump</button>
+                    </p>
+                </div>
+            </li>
             <li><img src="./bower_components/carousel-3d/images/fresh-peppers-619132_640.jpg" /></li>
+            <li>
+                <div style="background-color:black; color:white; margin:20px; padding:20px;">
+                    <h3>Life Is Fine by Langston Hughes</h3>
+                    <p>I went down to the river,<br/>
+                        I set down on the bank.<br/>
+                        I tried to think but couldn't,<br/>
+                        So I jumped in and sank.<br/><br/>
+                        I came up once and hollered!<br/>
+                        I came up twice and cried!<br/>
+                        If that water hadn't a-been so cold<br/>
+                        I might've sunk and died.</p>
+                </div>
+            </li>
             <li><img src="./bower_components/carousel-3d/images/keyboard-621830_640.jpg" /></li>
             <li><img src="./bower_components/carousel-3d/images/landscape-540122_640.jpg" /></li>
         </ul>
     </div>
 </div>
-
-<p>We provide bower package</p>
-
-<pre><code>bower install carousel-3d
+<br/><br/><br/><br/>
+<h3><a id="htmlContent" class="anchor" href="#htmlContent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Work with Html child item</h3>
+<p>Of course Html elements also can be a child. Feel free to rotate and see how the dom elements are rendered. You can even click the button on it.
+I haven't yet tested on complex cases, but I am sure there won't be a problem.</p>
+<img src="images/html.png" />
+<p>Just put what you want and wrap it with "li" tag as a child. It works!</p>
+<pre><code>&lt;li&gt;
+    &lt;div&gt;
+    &lt;p style=&quot;background-color:black; color:white; margin:20px; padding:20px;&quot;&gt;A simple html child&lt;/p&gt;
+    &lt;div style=&quot;background-color:gray; color:white;&quot;&gt;Html contents also works ok!!!&lt;/div&gt;
+    &lt;div&gt;The quick brown fox jumps over the lazy dog&lt;/div&gt;
+    &lt;p&gt;
+    Make the fox
+    &lt;button type=&quot;button&quot; onclick=&quot;alert('Jump!!');&quot;&gt;jump&lt;/button&gt;
+    &lt;/p&gt;
+    &lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;img src=&quot;./images/fresh-peppers.jpg&quot; /&gt;&lt;/li&gt;
 </code></pre>
-            
+<br/><br/><br/><br/>
+
+<h3><a id="compatibility" class="anchor" href="#compatibility" aria-hidden="true"><span class="octicon octicon-link"></span></a>How does it work on old browsers like IE8,IE9?</h3>
+<p>Here's how does it look like on IE8. As the legacy browsers do not support 3d transform, It try to emulate with transform, matrix filter ...</p>
+<img src="images/ie8ie9.png" />
+
+<p>And here for recent browsers</p>
+<img src="images/recent_browser.png" />
+
         </article>
       </div>
     </div>

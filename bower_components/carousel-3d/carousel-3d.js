@@ -1,27 +1,27 @@
-/* global define, require, jQuery */
+/* global define, require, exports */
 
 
 /**
  * Carousel3d
  */
 (function(factory) {
-	'use strict';
-	if (typeof define === 'function' && define.amd) {
-		define(['jquery', 'modernizr', 'jquery.resize'], factory);
-	} else if (typeof exports !== 'undefined') {
-		module.exports = factory(require('jquery'), require('modernizr'), require('jquery.resize'));
-	} else {
-		factory($, Modernizr);
-	}
+    'use strict';
+    if (typeof define === 'function' && define.amd) {
+        define(['jquery', 'modernizr', 'jquery.resize'], factory);
+    } else if (typeof exports !== 'undefined') {
+        module.exports = factory(require('jquery'), require('modernizr'), require('jquery.resize'));
+    } else {
+        factory($, Modernizr);
+    }
 }(function($) {
-	'use strict';
+    'use strict';
 
-	/**
-	 * constructor
-	 * @param panel
-	 * @constructor
-	 */
-	var Carousel3d = function (panel) {
+    /**
+     * constructor
+     * @param panel
+     * @constructor
+     */
+    var Carousel3d = function (panel) {
         this._panel = panel;
         this._leftButton = $(panel).find('[data-carousel-3d-left]')[0];
         this._rightButton = $(panel).find('[data-carousel-3d-right]')[0];
@@ -53,7 +53,7 @@
                 $(this._panel).css('visibility', 'visible');
             }.bind(this));
         }
-	};
+    };
 
 
     /**
@@ -70,6 +70,14 @@
      * @private
      */
     Carousel3d.prototype._spacing = 0.05;
+
+
+    /**
+     * Animate duration in milli-second
+     * @type {number}
+     * @private
+     */
+    Carousel3d.prototype._animateDuration = 1000;
 
 
     /**
@@ -116,11 +124,11 @@
 
 
 
-	/**
-	 * initializer
-	 * @param panel
-	 */
-	Carousel3d.prototype._init = function (done) {
+    /**
+     * initializer
+     * @param panel
+     */
+    Carousel3d.prototype._init = function (done) {
         var self = this;
 
         //init panel
@@ -155,9 +163,9 @@
         if (this._children) {
             $(this._children).each(function (index, child) {
                 $(child).css('position', 'absolute');
-                $(child).css('transition', '1s');
-                $(child).css('-moz-transition', '1s');
-                $(child).css('-webkit-transition', '1s');
+                $(child).css('transition', (this._animateDuration / 1000) + 's');
+                $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
+                $(child).css('-webkit-transition', (this._animateDuration / 1000) + 's');
             }.bind(this));
         }
 
@@ -169,7 +177,18 @@
         }.bind(this));
 
         //done();
-	};
+    };
+
+
+    /**
+     * fires 'select' event on element
+     * @param index
+     */
+    Carousel3d.prototype._triggerSelect = function (index) {
+        window.setTimeout(function () {
+            $(this._panel).trigger('select', index % this._children.length);
+        }.bind(this), this._animateDuration);
+    };
 
     /**
      * make carousel spin left
@@ -228,6 +247,7 @@
                     this._rotateChild(child, index, degree);
                 }.bind(this));
             }
+            this._triggerSelect(index);
         },
         _rotateChild: function (child, index, degree) {
             $(child).css('overflow', 'hidden');
@@ -246,13 +266,17 @@
             $(child).animate({
                 '_degree': childDegree
             }, {
-                duration: 1000,
+                duration: this._animateDuration,
                 step: function (now, tween) {
                     if (tween.prop === '_degree') {
+                        var sin = Math.sin(Math.PI / 180 * now);
                         var cos = Math.cos(Math.PI / 180 * now);
-                        var dx = Math.sin(Math.PI / 180 * now) * wrapperWidth / 2;
+                        var halfDegreeRange = 360 / this._children.length / 2;
+                        var perspectiveScale = Math.abs(Math.sin(Math.PI / 180 * (now + halfDegreeRange)) - Math.sin(Math.PI / 180 * (now - halfDegreeRange)))
+                            / (Math.sin(Math.PI / 180 * halfDegreeRange) * 2) * cos;
                         var heightScale = baseScale * (cos + 1) / 2;
-                        var widthScale = baseScale * Math.abs(cos) * heightScale;
+                        var widthScale = baseScale * perspectiveScale;
+                        var dx = sin * wrapperWidth / 2 + (width * widthScale / 2 * sin);
 
                         $(tween.elem).css('z-index', Math.floor((cos + 1) * 100));
                         $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
@@ -296,6 +320,9 @@
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
             var scale = (wrapperWidth) / width;
+            if ((width / height) < this._aspectRatio) {
+                scale = wrapperHeight / height;
+            }
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
@@ -324,31 +351,31 @@
 
 
 
-	/**
-	 * Exposed to jquery.
-	 * @returns {*}
-	 */
-	$.fn.carousel3d = function() {
-		var self = this, opt = arguments[0], args = Array.prototype.slice.call(arguments,1), l = self.length, i = 0, ret;
-		for(i; i < l; i += 1) {
-			if (typeof opt === 'object' || typeof opt === 'undefined') {
-				self[i].carousel3d =  new Carousel3d(self[i], opt);
-			}
-			else {
-				ret = self[i].carousel3d[opt].apply(self[i].carousel3d, args);
-			}
-			if (ret !== undefined) {
-				return ret;
-			}
-		}
-		return self;
-	};
+    /**
+     * Exposed to jquery.
+     * @returns {*}
+     */
+    $.fn.carousel3d = function() {
+        var self = this, opt = arguments[0], args = Array.prototype.slice.call(arguments,1), l = self.length, i = 0, ret;
+        for(i; i < l; i += 1) {
+            if (typeof opt === 'object' || typeof opt === 'undefined') {
+                self[i].carousel3d =  new Carousel3d(self[i], opt);
+            }
+            else {
+                ret = self[i].carousel3d[opt].apply(self[i].carousel3d, args);
+            }
+            if (ret !== undefined) {
+                return ret;
+            }
+        }
+        return self;
+    };
 
 
 
-	/**
-	 * initialize on load
-	 */
+    /**
+     * initialize on load
+     */
     $(function () {
         $('[data-carousel-3d]').carousel3d();
     });
@@ -356,5 +383,17 @@
     $(window).load(function () {
         windowLoaded = true;
     });
+
+
+    /**
+     * Math.sign shim
+     */
+    if (!Math.sign) {
+        Math.sign = function (value) {
+            var number = +value;
+            if (number === 0) { return number; }
+            return number < 0 ? -1 : 1;
+        }
+    }
 
 }));
