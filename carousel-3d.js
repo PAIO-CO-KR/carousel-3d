@@ -1,4 +1,4 @@
-/* global define, require, jQuery */
+/* global define, require, exports */
 
 
 /**
@@ -70,6 +70,14 @@
      * @private
      */
     Carousel3d.prototype._spacing = 0.05;
+
+
+    /**
+     * Animate duration in milli-second
+     * @type {number}
+     * @private
+     */
+    Carousel3d.prototype._animateDuration = 1000;
 
 
     /**
@@ -155,9 +163,9 @@
         if (this._children) {
             $(this._children).each(function (index, child) {
                 $(child).css('position', 'absolute');
-                $(child).css('transition', '1s');
-                $(child).css('-moz-transition', '1s');
-                $(child).css('-webkit-transition', '1s');
+                $(child).css('transition', (this._animateDuration / 1000) + 's');
+                $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
+                $(child).css('-webkit-transition', (this._animateDuration / 1000) + 's');
             }.bind(this));
         }
 
@@ -170,6 +178,17 @@
 
         //done();
 	};
+
+
+    /**
+     * fires 'select' event on element
+     * @param index
+     */
+    Carousel3d.prototype._triggerSelect = function (index) {
+        window.setTimeout(function () {
+            $(this._panel).trigger('select', index % this._children.length);
+        }.bind(this), this._animateDuration);
+    };
 
     /**
      * make carousel spin left
@@ -228,6 +247,7 @@
                     this._rotateChild(child, index, degree);
                 }.bind(this));
             }
+            this._triggerSelect(index);
         },
         _rotateChild: function (child, index, degree) {
             $(child).css('overflow', 'hidden');
@@ -246,7 +266,7 @@
             $(child).animate({
                 '_degree': childDegree
             }, {
-                duration: 1000,
+                duration: this._animateDuration,
                 step: function (now, tween) {
                     if (tween.prop === '_degree') {
                         var cos = Math.cos(Math.PI / 180 * now);

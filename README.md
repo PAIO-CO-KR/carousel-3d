@@ -48,16 +48,26 @@ The Carousel will have parents 100% width & height. so you will want wrap the di
 
 You can have multiple carousels with no effort. Just set proper attribues.
 ## API Reference
-You can rotate carousel with code below.
+* Rotate carousel
 ```javascript
 $('#myCarousel').carousel-3d('left');
 $('#myCarousel').carousel-3d('right');
 ```
+* Event listener
+```javascript
+$('#myCarousel').on('select', function (evt, index) {
+    console.log('item selected : ' + index);
+});
+```
+
+
 ## TODO
 * fix IE8,9 transform.
-* add item on select event
 
 ## History
+### 0.0.5
+* added 'select' event
+
 ### 0.0.4
 * bug fix: not initialized on safari 8
  
