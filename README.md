@@ -7,6 +7,8 @@ It supports all major browsers including IE8,9 with best effort. Full 3D effect 
 
 [http://paio-co-kr.github.io/carousel-3d](http://paio-co-kr.github.io/carousel-3d)
 
+![demo image](http://paio-co-kr.github.io/carousel-3d/images/recent_browser.png)
+
 ## Installation
 
 `bower install carousel-3d`
@@ -62,9 +64,12 @@ $('#myCarousel').on('select', function (evt, index) {
 
 
 ## TODO
-* fix IE8,9 transform.
+* add bottom indicator
 
 ## History
+### 0.0.6
+* improved IE8,9 transform.
+
 ### 0.0.5
 * added 'select' event
 
