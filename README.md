@@ -32,6 +32,7 @@ You will need to include those scripts before carousel-3d.js in html page or loa
 ```
 
 ## Code Example
+* **Extremely Easy! not even one javascript call required.**
 * Adding `data-carousel-3d` attribute on any element will be rendered as carousel.
 * Create a list and items with `data-carousel-3d-children` attribute on list tag. All items on that list will be arranged on 3D position.
 * Items can be simple image or any complicated html elements. They will properly rendered(scaled).
