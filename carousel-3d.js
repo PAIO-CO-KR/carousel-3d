@@ -320,6 +320,9 @@
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
             var scale = (wrapperWidth) / width;
+            if ((width / height) < this._aspectRatio) {
+                scale = wrapperHeight / height;
+            }
             var scaledWidth = width * scale;
             var scaledHeight = height * scale;
 
