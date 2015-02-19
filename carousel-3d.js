@@ -170,10 +170,10 @@
         }
 
         $(this._prevButton).click(function () {
-            this.left();
+            this.prev();
         }.bind(this));
         $(this._nextButton).click(function () {
-            this.right();
+            this.next();
         }.bind(this));
 
         //done();
@@ -191,17 +191,17 @@
     };
 
     /**
-     * make carousel spin left
+     * make carousel spin prev
      */
-    Carousel3d.prototype.left = function () {
+    Carousel3d.prototype.pref = function () {
         this._currentIndex -= 1;
         this._rotateChildren(this._currentIndex);
     };
 
     /**
-     * make carousel spin right
+     * make carousel spin next
      */
-    Carousel3d.prototype.right = function () {
+    Carousel3d.prototype.next = function () {
         this._currentIndex += 1;
         this._rotateChildren(this._currentIndex);
     };
