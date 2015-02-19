@@ -11,7 +11,7 @@ And this widget works with not only _**images**_ but any _**html elements**_ as 
 * Firefox(9~)
 * Opera(?~)
 * iOS-Safari(ios5~)
-* android-browser(?)
+* android-browser(?~)
 
 Thanks to [Sauce Labs](http://saucelabs.com), I confirmed carousel working on above versions. I think I can say it works almost everywhere.
 
