@@ -193,7 +193,7 @@
     /**
      * make carousel spin prev
      */
-    Carousel3d.prototype.pref = function () {
+    Carousel3d.prototype.prev = function () {
         this._currentIndex -= 1;
         this._rotateChildren(this._currentIndex);
     };
