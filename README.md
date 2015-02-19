@@ -8,7 +8,7 @@ And this widget works with not only _**images**_ but any _**html elements**_ as 
 * IE8~ (full 3D requires IE10~)
 * Chrome(32~)
 * Safari(6~)
-* Firefox(9~(
+* Firefox(9~)
 * Opera(?~)
 * iOS-Safari(ios5~)
 * android-browser(?)
