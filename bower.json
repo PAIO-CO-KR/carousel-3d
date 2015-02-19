@@ -1,7 +1,7 @@
 {
   "name": "carousel-3d",
   "main": "carousel-3d.js",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "authors": [
     "KyuWoo Choi <apple@paio.co.kr>"
   ],
@@ -18,5 +18,9 @@
     "javascript-detect-element-resize": "~0.5.3",
     "modernizr": "~2.8.3"
   },
-  "homepage": "https://github.com/PAIO-CO-KR/carousel-3d"
+  "homepage": "https://github.com/PAIO-CO-KR/carousel-3d",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
+  }
 }
