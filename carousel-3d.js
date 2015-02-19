@@ -21,17 +21,20 @@
 	 * @param panel
 	 * @constructor
 	 */
-	var Carousel3d = function (panel) {
-        this._panel = panel;
-        this._prevButton = $(panel).find('[data-carousel-3d-prev], [data-carousel-3d-left]')[0];
-        this._nextButton = $(panel).find('[data-carousel-3d-next], [data-carousel-3d-right]')[0];
-        this._childrenWrapper = $(panel).find('[data-carousel-3d-children]')[0];
-        if (this._childrenWrapper) {
-            this._children = [];
-            $(this._childrenWrapper).children().each(function (index, child) {
-                this._children.push(child);
-            }.bind(this));
-        }
+	var Carousel3d = function (childrenWrapper) {
+        //manipulate DOM.
+        this._panel = $('<div/>')[0];
+        $(childrenWrapper).parent().append(this._panel);
+        $(this._panel).append(childrenWrapper);
+        this._childrenWrapper = childrenWrapper;
+        this._prevButton = $('<div/>')[0];
+        $(this._panel).append(this._prevButton);
+        this._nextButton = $('<div/>')[0];
+        $(this._panel).append(this._nextButton);
+        this._children = [];
+        $(this._childrenWrapper).children().each(function (index, child) {
+            this._children.push(child);
+        }.bind(this));
 
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
