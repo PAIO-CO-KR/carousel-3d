@@ -18,9 +18,5 @@
     "javascript-detect-element-resize": "~0.5.3",
     "modernizr": "~2.8.3"
   },
-  "homepage": "https://github.com/PAIO-CO-KR/carousel-3d",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
-  }
+  "homepage": "https://github.com/PAIO-CO-KR/carousel-3d"
 }
