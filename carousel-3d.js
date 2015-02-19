@@ -23,8 +23,8 @@
 	 */
 	var Carousel3d = function (panel) {
         this._panel = panel;
-        this._leftButton = $(panel).find('[data-carousel-3d-left]')[0];
-        this._rightButton = $(panel).find('[data-carousel-3d-right]')[0];
+        this._prevButton = $(panel).find('[data-carousel-3d-prev], [data-carousel-3d-left]')[0];
+        this._nextButton = $(panel).find('[data-carousel-3d-next], [data-carousel-3d-right]')[0];
         this._childrenWrapper = $(panel).find('[data-carousel-3d-children]')[0];
         if (this._childrenWrapper) {
             this._children = [];
@@ -92,14 +92,14 @@
      * @type {null}
      * @private
      */
-    Carousel3d.prototype._leftButton = null;
+    Carousel3d.prototype._prevButton = null;
 
     /**
      *
      * @type {null}
      * @private
      */
-    Carousel3d.prototype._rightButton = null;
+    Carousel3d.prototype._nextButton = null;
 
     /**
      *
@@ -137,14 +137,14 @@
         $(this._panel).css('width', '99%');
         $(this._panel).css('height', '100%');
 
-        $(this._leftButton).css('position', 'absolute');
-        $(this._rightButton).css('position', 'absolute');
-        $(this._leftButton).css('z-index', 1000);
-        $(this._rightButton).css('z-index', 1000);
-        $(this._leftButton).css('top', '50%');
-        $(this._rightButton).css('top', '50%');
-        $(this._leftButton).css('left', '0px');
-        $(this._rightButton).css('right', '0px');
+        $(this._prevButton).css('position', 'absolute');
+        $(this._nextButton).css('position', 'absolute');
+        $(this._prevButton).css('z-index', 1000);
+        $(this._nextButton).css('z-index', 1000);
+        $(this._prevButton).css('top', '50%');
+        $(this._nextButton).css('top', '50%');
+        $(this._prevButton).css('left', '0px');
+        $(this._nextButton).css('right', '0px');
 
         $(this._childrenWrapper).css('position', 'absolute');
         $(this._childrenWrapper).css('perspective', '1000px');
@@ -169,10 +169,10 @@
             }.bind(this));
         }
 
-        $(this._leftButton).click(function () {
+        $(this._prevButton).click(function () {
             this.left();
         }.bind(this));
-        $(this._rightButton).click(function () {
+        $(this._nextButton).click(function () {
             this.right();
         }.bind(this));
 

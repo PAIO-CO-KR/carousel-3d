@@ -41,13 +41,13 @@ You will need to include those scripts before carousel-3d.js in html page or loa
 * Create a list and items with `data-carousel-3d-children` attribute on list tag. All items on that list will be arranged on 3D position.
 * Items can be simple image or any complicated html elements. They will properly rendered(scaled).
 * You can also `selected` attribute on item which will be default selected item.
-* The elements with `data-carousel-3d-left` and `data-carousel-3d-right` will become buttons on each side.
+* The elements with `data-carousel-3d-prev` and `data-carousel-3d-next` will become buttons on each side.
 
 ```html
 <div id="wrapper">
     <div id="myCarousel" data-carousel-3d >
-        <img src="./images/left.png" data-carousel-3d-left />
-        <img src="./images/right.png" data-carousel-3d-right />
+        <img src="./images/prev.png" data-carousel-3d-prev />
+        <img src="./images/next.png" data-carousel-3d-next />
         <ul data-carousel-3d-children>
             <li><img src="./images/castles-616573_640.jpg" /></li>
             <li selected><img src="./images/cup-617422_640.jpg" /></li>
@@ -81,8 +81,8 @@ You can have multiple carousels with no effort. Just set proper attribues.
 ## API Reference
 * Rotate carousel
 ```javascript
-$('#myCarousel').carousel-3d('left');
-$('#myCarousel').carousel-3d('right');
+$('#myCarousel').carousel-3d('prev');
+$('#myCarousel').carousel-3d('next');
 ```
 * Event listener
 ```javascript
