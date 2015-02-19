@@ -6,10 +6,10 @@ And this widget works with not only _**images**_ but any _**html elements**_ as 
 
 ## Supports
 * IE8~ (full 3D requires IE10~)
-* Chrome32~
-* Safari6~
-* Firefox9~
-* Opera(?~recent)
+* Chrome(32~)
+* Safari(6~)
+* Firefox(9~(
+* Opera(?~)
 * iOS-Safari(ios5~)
 * android-browser(?)
 
