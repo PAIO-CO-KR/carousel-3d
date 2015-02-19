@@ -6,10 +6,14 @@ And this widget works with not only _**images**_ but any _**html elements**_ as 
 
 ## Supports
 * IE8~ (full 3D requires IE10~)
-* Chrome
-* Safari
-* Firefox
-* Opera
+* Chrome32~
+* Safari6~
+* Firefox9~
+* Opera(?~recent)
+* iOS-Safari(ios5~)
+* android-browser(?)
+
+Thanks to [Sauce Labs](http://saucelabs.com), I confirmed carousel working on above versions. I think I can say it works almost everywhere.
 
 ## Demo
 
