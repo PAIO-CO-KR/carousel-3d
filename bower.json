@@ -1,7 +1,7 @@
 {
   "name": "carousel-3d",
   "main": "carousel-3d.js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "authors": [
     "KyuWoo Choi <apple@paio.co.kr>"
   ],
