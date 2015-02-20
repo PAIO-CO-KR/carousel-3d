@@ -23,21 +23,28 @@
 	 */
 	var Carousel3d = function (childrenWrapper) {
         //manipulate DOM.
-        this._panel = $('<div/>')[0];
+        this._panel = $('<div data-carousel-3d-panel ></div>')[0];
+        $($(childrenWrapper).attr('class').split(' ')).each(function (index, classValue) {
+            if (classValue.indexOf('theme-') === 0) {
+                $(this._panel).attr('class', classValue);
+            }
+        }.bind(this));
         $(childrenWrapper).parent().append(this._panel);
         $(this._panel).append(childrenWrapper);
         this._childrenWrapper = childrenWrapper;
-        this._prevButton = $('<div/>')[0];
+        this._prevButton = $('<div class="prevButton"></div>')[0];
         $(this._panel).append(this._prevButton);
-        this._nextButton = $('<div/>')[0];
+        this._nextButton = $('<div class="nextButton"></div>')[0];
         $(this._panel).append(this._nextButton);
         this._children = [];
         $(this._childrenWrapper).children().each(function (index, child) {
             this._children.push(child);
         }.bind(this));
 
+        //extend renderer
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
+            //$.extend(this, rendererTransform);
         }
         else if (Modernizr.csstransforms) {
             $.extend(this, rendererTransform);
@@ -47,6 +54,7 @@
             this._ieTransform = true;
         }
 
+        //initialize after dom fully loaded
         if (windowLoaded) {
             this._init();
         } else {
@@ -132,39 +140,30 @@
 	 * @param panel
 	 */
 	Carousel3d.prototype._init = function (done) {
-        var self = this;
+        //TODO IE call resize infinite. patch jquery.resize then replace
+        //$(this._panel).resize(this._resize.bind(this));
+        (function () {
+            var width = $(this._panel).width();
+            var height = $(this._panel).height();
+            $(this._panel).resize(function () {
+                if ($(this._panel).width() !== width && $(this._panel).height() !== height) {
+                    width = $(this._panel).width();
+                    height = $(this._panel).height();
+                    this._resize();
+                }
+            }.bind(this));
+        }.bind(this))();
+        //TODO some browser do not call resize for the first time. work around. fix this later.
+        setTimeout(function () {
+            this._resize();
+        }.bind(this), 1);
 
-        //init panel
-        $(this._panel).css('position', 'relative');
-        $(this._panel).css('overflow', 'hidden');
-        $(this._panel).css('width', '99%');
-        $(this._panel).css('height', '100%');
-
-        $(this._prevButton).css('position', 'absolute');
-        $(this._nextButton).css('position', 'absolute');
-        $(this._prevButton).css('z-index', 1000);
-        $(this._nextButton).css('z-index', 1000);
-        $(this._prevButton).css('top', '50%');
-        $(this._nextButton).css('top', '50%');
-        $(this._prevButton).css('left', '0px');
-        $(this._nextButton).css('right', '0px');
-
-        $(this._childrenWrapper).css('position', 'absolute');
-        $(this._childrenWrapper).css('perspective', '1000px');
-        $(this._childrenWrapper).css('-moz-perspective', '1000px');
-        $(this._childrenWrapper).css('-webkit-perspective', '1000px');
-        $(this._childrenWrapper).css('list-style-type', 'none');
-        $(this._childrenWrapper).css('margin', '0px');
-        $(this._childrenWrapper).css('padding', '0px');
-        $(this._childrenWrapper).css('width', '100%');
-        $(this._childrenWrapper).css('height', '100%');
-
-        $(this._panel).resize(this._resize.bind(this));
-        //TODO safari doesn't call resize for the first time. work around. fix this later.
-        $(this._panel).css('width', '100%');
-
+        //animate duration.
         if (this._children) {
             $(this._children).each(function (index, child) {
+                if ($(child).attr('selected')) {
+                    this._currentIndex = index;
+                }
                 $(child).css('position', 'absolute');
                 $(child).css('transition', (this._animateDuration / 1000) + 's');
                 $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
@@ -172,14 +171,13 @@
             }.bind(this));
         }
 
+        //attach event for prev/next buttons.
         $(this._prevButton).click(function () {
             this.prev();
         }.bind(this));
         $(this._nextButton).click(function () {
             this.next();
         }.bind(this));
-
-        //done();
 	};
 
 
@@ -222,15 +220,12 @@
         var wrapperHeight = Math.min(wrapperWidth / this._aspectRatio, panelHeight);
         $(wrapper).width(wrapperWidth);
         $(wrapper).height(wrapperHeight);
-        $(wrapper).css('left', (panelWidth - wrapperWidth) / 2);
-        $(wrapper).css('top', (panelHeight - wrapperHeight) / 2);
+        $(wrapper).css('left', ($(this._panel).outerWidth() - wrapperWidth) / 2);
+        $(wrapper).css('top', ($(this._panel).outerHeight() - wrapperHeight) / 2);
         if (this._children) {
             $(this._children).each(function (index, child) {
-                $(child).data('width', $(child).width());
-                $(child).data('height', $(child).height());
-                if ($(child).attr('selected')) {
-                    this._currentIndex = index;
-                }
+                $(child).data('width', $(child).outerWidth());
+                $(child).data('height', $(child).outerHeight());
             }.bind(this));
         }
         this._rotateChildren(this._currentIndex);
@@ -318,8 +313,8 @@
             degree = degree ? degree : 0;
 
             //scale, margin
-            var width = $(child).width();
-            var height = $(child).height();
+            var width = $(child).outerWidth();
+            var height = $(child).outerHeight();
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
             var scale = (wrapperWidth) / width;
@@ -331,6 +326,7 @@
 
             $(child).css('left', ((scaledWidth - width) / 2) + ((wrapperWidth - scaledWidth) / 2) + 'px');
             $(child).css('top', ((scaledHeight - height) / 2) + ((wrapperHeight - scaledHeight) / 2) + 'px');
+
 
             //rotation
             $(child).data('index', index);
