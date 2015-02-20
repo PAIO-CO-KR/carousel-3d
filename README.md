@@ -28,35 +28,34 @@ Thanks to [Sauce Labs](http://saucelabs.com), I confirmed carousel working on ab
 ## Dependencies
 carousel-3d requires some modules. `jquery`, `javascript-detect-element-resize`, `modernizr`.
 You will need to include those scripts before carousel-3d.js in html page or load it with requirejs or browserify as carousel-3d comes with UMD style module definition.
+
+## Code Example
+* **Extremely Easy! not even one javascript call required.**
+* Adding `data-carousel-3d` attribute on `ul` will be rendered as carousel.
+* Create items under the list tag. All items on that list will be arranged on 3D position.
+* Items can be simple **image** or any complicated **html elements**.
+* You can also `selected` attribute on item which will be default selected item.
+
+in header, add css theme and required js.
 ```html
+<link rel="stylesheet" href="theme/default/carousel-3d.css" />
+
 <script src="bower_components/jquery/jquery.js"></script>
 <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
 <script src="bower_components/modernizr/modernizr.js"></script>
 <script src="carousel-3d.js" ></script>
 ```
 
-## Code Example
-* **Extremely Easy! not even one javascript call required.**
-* Adding `data-carousel-3d` attribute on any element will be rendered as carousel.
-* Create a list and items with `data-carousel-3d-children` attribute on list tag. All items on that list will be arranged on 3D position.
-* Items can be simple image or any complicated html elements. They will properly rendered(scaled).
-* You can also `selected` attribute on item which will be default selected item.
-* The elements with `data-carousel-3d-prev` and `data-carousel-3d-next` will become buttons on each side.
-
+in body
 ```html
 <div id="wrapper">
-    <div id="myCarousel" data-carousel-3d >
-        <img src="./images/prev.png" data-carousel-3d-prev />
-        <img src="./images/next.png" data-carousel-3d-next />
-        <ul data-carousel-3d-children>
-            <li><img src="./images/castles-616573_640.jpg" /></li>
-            <li selected><img src="./images/cup-617422_640.jpg" /></li>
-            <li><img src="./images/dart-444201_640.jpg" /></li>
-            <li><img src="./images/fresh-peppers-619132_640.jpg" /></li>
-            <li><img src="./images/keyboard-621830_640.jpg" /></li>
-            <li><img src="./images/landscape-540122_640.jpg" /></li>
-        </ul>
-    </div>
+    <ul id="myCarousel" data-carousel-3d class="theme-default something">
+        <li><img src="./images/castles-616573_640.jpg" /></li>
+        <li selected><img src="./images/cup-617422_640.jpg" /></li>
+        <li><img src="./images/fresh-peppers-619132_640.jpg" /></li>
+        <li><img src="./images/keyboard-621830_640.jpg" /></li>
+        <li><img src="./images/landscape-540122_640.jpg" /></li>
+    </ul>
 </div>
 ```
 
@@ -64,15 +63,13 @@ You will need to include those scripts before carousel-3d.js in html page or loa
 
 ```html
 <li>
-    <div>
     <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
     <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
     <div>The quick brown fox jumps over the lazy dog</div>
     <p>
-    Make the fox
-    <button type="button" onclick="alert('Jump!!');">jump</button>
+        Make the fox
+        <button type="button" onclick="alert('Jump!!');">jump</button>
     </p>
-    </div>
 </li>
 ```
 The Carousel will have parents 100% width & height. so you will want wrap the div with appropriate size. And wide aspect(150%) is recommanded to show 3D rotating effect.
@@ -96,15 +93,9 @@ $('#myCarousel').on('select', function (evt, index) {
 * add bottom indicator
 
 ## History
-### 0.0.6
-* improved IE8,9 transform.
-
-### 0.0.5
-* added 'select' event
-
-### 0.0.4
-* bug fix: not initialized on safari 8
- 
+### 0.1.0
+* improved transforms
+* added theme feature
 
 ## License
 
