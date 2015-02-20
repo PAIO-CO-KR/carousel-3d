@@ -40,5 +40,9 @@
     height: 90%;
 }
 .theme-default[data-carousel-3d] li {
+    position: absolute;
     border: 5px solid rgba(237, 237, 236, 1);
+}
+[data-child-content] {
+    transform-origin: 0px 0px;
 }

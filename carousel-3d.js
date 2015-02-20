@@ -23,7 +23,9 @@
 	 */
 	var Carousel3d = function (childrenWrapper) {
         //manipulate DOM.
+        //attach panel to parent, move childrenWrapper under the panel
         this._panel = $('<div data-carousel-3d-panel ></div>')[0];
+        this._childrenWrapper = childrenWrapper;
         $($(childrenWrapper).attr('class').split(' ')).each(function (index, classValue) {
             if (classValue.indexOf('theme-') === 0) {
                 $(this._panel).attr('class', classValue);
@@ -31,20 +33,24 @@
         }.bind(this));
         $(childrenWrapper).parent().append(this._panel);
         $(this._panel).append(childrenWrapper);
-        this._childrenWrapper = childrenWrapper;
+        //create prev/next buttons
         this._prevButton = $('<div class="prevButton"></div>')[0];
         $(this._panel).append(this._prevButton);
         this._nextButton = $('<div class="nextButton"></div>')[0];
         $(this._panel).append(this._nextButton);
         this._children = [];
-        $(this._childrenWrapper).children().each(function (index, child) {
+        $(childrenWrapper).children().each(function (index, child) {
+            var $childContent = $('<div data-child-content />');
+            $childContent.css('position', 'absolute');
+            $(child).append($childContent);
+            $(child).data('content', $childContent[0]);
+            $childContent.append($(child).children());
             this._children.push(child);
         }.bind(this));
 
         //extend renderer
         if (Modernizr.csstransforms3d) {
             $.extend(this, renderer3DTransform);
-            //$.extend(this, rendererTransform);
         }
         else if (Modernizr.csstransforms) {
             $.extend(this, rendererTransform);
@@ -126,6 +132,7 @@
      */
     Carousel3d.prototype._children = null;
 
+
     /**
      *
      * @type {number}
@@ -140,31 +147,27 @@
 	 * @param panel
 	 */
 	Carousel3d.prototype._init = function (done) {
-        //TODO IE call resize infinite. patch jquery.resize then replace
-        //$(this._panel).resize(this._resize.bind(this));
-        (function () {
-            var width = $(this._panel).width();
-            var height = $(this._panel).height();
-            $(this._panel).resize(function () {
-                if ($(this._panel).width() !== width && $(this._panel).height() !== height) {
-                    width = $(this._panel).width();
-                    height = $(this._panel).height();
-                    this._resize();
-                }
-            }.bind(this));
-        }.bind(this))();
+        bindResize(this._panel, this._resize.bind(this));
         //TODO some browser do not call resize for the first time. work around. fix this later.
         setTimeout(function () {
             this._resize();
         }.bind(this), 1);
 
-        //animate duration.
         if (this._children) {
             $(this._children).each(function (index, child) {
+                //current index for selected
                 if ($(child).attr('selected')) {
                     this._currentIndex = index;
                 }
-                $(child).css('position', 'absolute');
+
+                //resize
+                bindResize($(child).data('content'), this._childResize.bind(this));
+                //TODO some browser do not call resize for the first time. work around. fix this later.
+                setTimeout(function () {
+                    this._childResize($(child).data('content'));
+                }.bind(this), 1);
+
+                //animate duration.
                 $(child).css('transition', (this._animateDuration / 1000) + 's');
                 $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
                 $(child).css('-webkit-transition', (this._animateDuration / 1000) + 's');
@@ -218,16 +221,18 @@
         var panelHeight = $(this._panel).height();
         var wrapperWidth = Math.min(panelHeight * this._aspectRatio, panelWidth);
         var wrapperHeight = Math.min(wrapperWidth / this._aspectRatio, panelHeight);
+
         $(wrapper).width(wrapperWidth);
         $(wrapper).height(wrapperHeight);
         $(wrapper).css('left', ($(this._panel).outerWidth() - wrapperWidth) / 2);
         $(wrapper).css('top', ($(this._panel).outerHeight() - wrapperHeight) / 2);
-        if (this._children) {
-            $(this._children).each(function (index, child) {
-                $(child).data('width', $(child).outerWidth());
-                $(child).data('height', $(child).outerHeight());
-            }.bind(this));
-        }
+        $(this._children).each(function (index, child) {
+            $(child).outerWidth(wrapperWidth);
+            $(child).outerHeight(wrapperHeight);
+            window.setTimeout(function () {
+                this._childResize($(child).data('content'));
+            }.bind(this), this._animateDuration);
+        }.bind(this));
         this._rotateChildren(this._currentIndex);
     };
 
@@ -237,7 +242,17 @@
      * @type {{_initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
      */
     var rendererTransform = {
+
+        /**
+         *
+         */
         _ieTransform: false,
+
+        /**
+         *
+         * @param index
+         * @private
+         */
         _rotateChildren: function (index) {
             var degree = -index * (360 / this._children.length);
             if (this._children) {
@@ -247,6 +262,23 @@
             }
             this._triggerSelect(index);
         },
+
+        /**
+         *
+         * @private
+         */
+        _childResize: function (child) {
+            $(child).data('width', $(child).outerWidth());
+            $(child).data('height', $(child).outerHeight());
+        },
+
+        /**
+         *
+         * @param child
+         * @param index
+         * @param degree
+         * @private
+         */
         _rotateChild: function (child, index, degree) {
             $(child).css('overflow', 'hidden');
             var baseScale = 1;
@@ -303,41 +335,64 @@
      * @type {{_tz: number, _initChildren: Function, _applyChildZIndex: Function, _rotateChild: Function}}
      */
     var renderer3DTransform = {
+
+        /**
+         *
+         */
         _tz: 0,
+
+        /**
+         *
+         * @param index
+         * @private
+         */
         _rotateChildren: function (index) {
             var wrapperWidth = $(this._childrenWrapper).width();
             this._tz =  (wrapperWidth / 2) / Math.tan(Math.PI / this._children.length);
             rendererTransform._rotateChildren.call(this, index);
         },
+
+        /**
+         *
+         * @private
+         */
+        _childResize: function (childContent) {
+            var child = $(childContent).parent();
+            var width = $(child).width();
+            var height = $(child).height();
+            var contentWidth = $(childContent).width();
+            var contentHeight = $(childContent).height();
+            var scale = width / contentWidth;
+            if ((contentWidth / contentHeight) < this._aspectRatio) {
+                scale = height / contentHeight;
+            }
+            var scaledWidth = contentWidth * scale;
+            var scaledHeight = contentHeight * scale;
+            var transformText = '';
+            transformText += ' translate(' + ((width - scaledWidth) / 2) + 'px, ' + ((height - scaledHeight) / 2) + 'px)';
+            transformText += ' scale(' + scale + ')';
+            $(childContent).css('transform', transformText);
+            $(childContent).css('-moz-transform', transformText);
+            $(childContent).css('-webkit-transform', transformText);
+        },
+
+        /**
+         *
+         * @param child
+         * @param index
+         * @param degree
+         * @private
+         */
         _rotateChild: function (child, index, degree) {
             degree = degree ? degree : 0;
 
-            //scale, margin
-            var width = $(child).outerWidth();
-            var height = $(child).outerHeight();
-            var wrapperWidth = $(this._childrenWrapper).width();
-            var wrapperHeight = $(this._childrenWrapper).height();
-            var scale = (wrapperWidth) / width;
-            if ((width / height) < this._aspectRatio) {
-                scale = wrapperHeight / height;
-            }
-            var scaledWidth = width * scale;
-            var scaledHeight = height * scale;
-
-            $(child).css('left', ((scaledWidth - width) / 2) + ((wrapperWidth - scaledWidth) / 2) + 'px');
-            $(child).css('top', ((scaledHeight - height) / 2) + ((wrapperHeight - scaledHeight) / 2) + 'px');
-
-
             //rotation
-            $(child).data('index', index);
-            $(child).data('cssScale', scale);
-
             var childDegree = ((360 / this._children.length) * index) + degree;
             var transformText = '';
-            transformText += ' scale(' + scale + ')';
-            transformText += ' translateZ(' + -this._tz * (1 / scale) * (1 + this._spacing) + 'px)';
+            transformText += ' translateZ(' + -this._tz * (1 + this._spacing) + 'px)';
             transformText += ' rotateY(' + childDegree + 'deg)';
-            transformText += ' translateZ(' + this._tz * (1 / scale) * (1 + this._spacing) + 'px)';
+            transformText += ' translateZ(' + this._tz * (1 + this._spacing) + 'px)';
+
             $(child).css('transform', transformText);
             $(child).css('-moz-transform', transformText);
             $(child).css('-webkit-transform', transformText);
@@ -394,5 +449,26 @@
             return number < 0 ? -1 : 1;
         }
     }
+
+    /**
+     *
+     * @param el
+     * @param callback
+     */
+    var bindResize = function (el, callback) {
+        //TODO IE call resize infinite. patch jquery.resize then replace
+        //$(el).resize(callback.bind(this));
+        (function () {
+            var width = $(el).width();
+            var height = $(el).height();
+            $(el).resize(function () {
+                if ($(el).width() !== width || $(el).height() !== height) {
+                    width = $(el).width();
+                    height = $(el).height();
+                    callback(el);
+                }
+            });
+        })();
+    };
 
 }));
