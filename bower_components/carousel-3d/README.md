@@ -1,11 +1,25 @@
-# [carousel-3d](http://paio-co-kr.github.io/carousel-3d) : jquery plugin 3D carousel
+# [carousel-3d](http://paio-co-kr.github.io/carousel-3d) : jquery plugin 3D carousel slider
 
 A simple 3D carousel widget.
 It supports all major browsers including IE8,9 with best effort. Full 3D effect requires `css transform3d` support browsers. 
+And this widget works with not only _**images**_ but any _**html elements**_ as child.
+
+## Supports
+* IE8~ (full 3D requires IE10~)
+* Chrome(32~)
+* Safari(6~)
+* Firefox(9~)
+* Opera(?~)
+* iOS-Safari(ios5~)
+* android-browser(?~)
+
+Thanks to [Sauce Labs](http://saucelabs.com), I confirmed carousel working on above versions. I think I can say it works almost everywhere.
 
 ## Demo
 
 [http://paio-co-kr.github.io/carousel-3d](http://paio-co-kr.github.io/carousel-3d)
+
+![demo image](http://paio-co-kr.github.io/carousel-3d/images/recent_browser.png)
 
 ## Installation
 
@@ -22,17 +36,18 @@ You will need to include those scripts before carousel-3d.js in html page or loa
 ```
 
 ## Code Example
+* **Extremely Easy! not even one javascript call required.**
 * Adding `data-carousel-3d` attribute on any element will be rendered as carousel.
 * Create a list and items with `data-carousel-3d-children` attribute on list tag. All items on that list will be arranged on 3D position.
 * Items can be simple image or any complicated html elements. They will properly rendered(scaled).
 * You can also `selected` attribute on item which will be default selected item.
-* The elements with `data-carousel-3d-left` and `data-carousel-3d-right` will become buttons on each side.
+* The elements with `data-carousel-3d-prev` and `data-carousel-3d-next` will become buttons on each side.
 
 ```html
 <div id="wrapper">
     <div id="myCarousel" data-carousel-3d >
-        <img src="./images/left.png" data-carousel-3d-left />
-        <img src="./images/right.png" data-carousel-3d-right />
+        <img src="./images/prev.png" data-carousel-3d-prev />
+        <img src="./images/next.png" data-carousel-3d-next />
         <ul data-carousel-3d-children>
             <li><img src="./images/castles-616573_640.jpg" /></li>
             <li selected><img src="./images/cup-617422_640.jpg" /></li>
@@ -44,14 +59,30 @@ You will need to include those scripts before carousel-3d.js in html page or loa
     </div>
 </div>
 ```
+
+* You will also want html document as child.
+
+```html
+<li>
+    <div>
+    <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
+    <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
+    <div>The quick brown fox jumps over the lazy dog</div>
+    <p>
+    Make the fox
+    <button type="button" onclick="alert('Jump!!');">jump</button>
+    </p>
+    </div>
+</li>
+```
 The Carousel will have parents 100% width & height. so you will want wrap the div with appropriate size. And wide aspect(150%) is recommanded to show 3D rotating effect.
 
 You can have multiple carousels with no effort. Just set proper attribues.
 ## API Reference
 * Rotate carousel
 ```javascript
-$('#myCarousel').carousel-3d('left');
-$('#myCarousel').carousel-3d('right');
+$('#myCarousel').carousel3d('prev');
+$('#myCarousel').carousel3d('next');
 ```
 * Event listener
 ```javascript
@@ -62,9 +93,12 @@ $('#myCarousel').on('select', function (evt, index) {
 
 
 ## TODO
-* fix IE8,9 transform.
+* add bottom indicator
 
 ## History
+### 0.0.6
+* improved IE8,9 transform.
+
 ### 0.0.5
 * added 'select' event
 

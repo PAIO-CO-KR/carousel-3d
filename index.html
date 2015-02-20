@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen">
   <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <link rel="stylesheet" href="./bower_components/carousel-3d/theme/default/carousel-3d.css" />
 
     <style type="text/css">
         .carousel-wrapper {
@@ -16,7 +17,7 @@
         }
     </style>
 
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
   <script type="text/javascript" src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
   <script type="text/javascript" src="bower_components/modernizr/modernizr.js"></script>
@@ -53,41 +54,22 @@
 <p>It supports all major browsers including IE8,9 with best effort. Full 3D effect requires `css transform3d` support browsers.</p>
 
 <div class="carousel-wrapper">
-    <div data-carousel-3d >
-        <img src="./bower_components/carousel-3d/images/left.png" data-carousel-3d-left />
-        <img src="./bower_components/carousel-3d/images/right.png" data-carousel-3d-right />
-        <ul data-carousel-3d-children>
-            <li><img src="./bower_components/carousel-3d/images/castles-616573_640.jpg" /></li>
-            <li selected><img src="./bower_components/carousel-3d/images/cup-617422_640.jpg" /></li>
-            <li>
-                <div>
-                    <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
-                    <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
-                    <div>The quick brown fox jumps over the lazy dog</div>
-                    <p>
-                        Make the fox
-                        <button type="button" onclick="alert('Jump!!');">jump</button>
-                    </p>
-                </div>
-            </li>
-            <li><img src="./bower_components/carousel-3d/images/fresh-peppers-619132_640.jpg" /></li>
-            <li>
-                <div style="background-color:black; color:white; margin:20px; padding:20px;">
-                    <h3>Life Is Fine by Langston Hughes</h3>
-                    <p>I went down to the river,<br/>
-                        I set down on the bank.<br/>
-                        I tried to think but couldn't,<br/>
-                        So I jumped in and sank.<br/><br/>
-                        I came up once and hollered!<br/>
-                        I came up twice and cried!<br/>
-                        If that water hadn't a-been so cold<br/>
-                        I might've sunk and died.</p>
-                </div>
-            </li>
-            <li><img src="./bower_components/carousel-3d/images/keyboard-621830_640.jpg" /></li>
-            <li><img src="./bower_components/carousel-3d/images/landscape-540122_640.jpg" /></li>
-        </ul>
-    </div>
+    <ul data-carousel-3d class="theme-default something">
+        <li>
+            <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
+            <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
+            <div>The quick brown fox jumps over the lazy dog</div>
+            <p>
+                Make the fox
+                <button type="button" onclick="alert('Jump!!');">jump</button>
+            </p>
+        </li>
+        <li><img src="./bower_components/carousel-3d/images/castles-616573_640.jpg" /></li>
+        <li selected><img src="./bower_components/carousel-3d/images/cup-617422_640.jpg" /></li>
+        <li><img src="./bower_components/carousel-3d/images/fresh-peppers-619132_640.jpg" /></li>
+        <li><img src="./bower_components/carousel-3d/images/keyboard-621830_640.jpg" /></li>
+        <li><img src="./bower_components/carousel-3d/images/landscape-540122_640.jpg" /></li>
+    </ul>
 </div>
 <br/><br/><br/><br/>
 <h3><a id="htmlContent" class="anchor" href="#htmlContent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Work with Html child item</h3>
