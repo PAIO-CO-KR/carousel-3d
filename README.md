@@ -81,8 +81,8 @@ You can have multiple carousels with no effort. Just set proper attribues.
 ## API Reference
 * Rotate carousel
 ```javascript
-$('#myCarousel').carousel-3d('prev');
-$('#myCarousel').carousel-3d('next');
+$('#myCarousel').carousel3d('prev');
+$('#myCarousel').carousel3d('next');
 ```
 * Event listener
 ```javascript
