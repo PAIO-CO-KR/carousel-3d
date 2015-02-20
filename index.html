@@ -3,6 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+
+    <link rel="stylesheet" href="theme/default/carousel-3d.css" />
+
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
     <script src="bower_components/modernizr/modernizr.js"></script>
@@ -11,6 +14,7 @@
     <style type="text/css">
         html, body {
             height: 100%;
+            margin: 0px;
         }
         #wrapper {
             width: 100%;
@@ -19,30 +23,23 @@
     </style>
 </head>
 <body>
-
 <div id="wrapper">
-    <div data-carousel-3d >
-        <img src="images/prev.png" data-carousel-3d-left />
-        <img src="images/next.png" data-carousel-3d-right />
-        <ul data-carousel-3d-children>
-            <li><img src="./images/castles-616573_640.jpg" /></li>
-            <li selected><img src="./images/cup-617422_640.jpg" /></li>
-            <li>
-                <div>
-                    <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
-                    <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
-                    <div>The quick brown fox jumps over the lazy dog</div>
-                    <p>
-                        Make the fox
-                        <button type="button" onclick="alert('Jump!!');">jump</button>
-                    </p>
-                </div>
-            </li>
-            <li><img src="./images/fresh-peppers-619132_640.jpg" /></li>
-            <li><img src="./images/keyboard-621830_640.jpg" /></li>
-            <li><img src="./images/landscape-540122_640.jpg" /></li>
-        </ul>
-    </div>
+    <ul data-carousel-3d class="theme-default something">
+        <li>
+            <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
+            <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
+            <div>The quick brown fox jumps over the lazy dog</div>
+            <p>
+                Make the fox
+                <button type="button" onclick="alert('Jump!!');">jump</button>
+            </p>
+        </li>
+        <li><img src="./images/castles-616573_640.jpg" /></li>
+        <li selected><img src="./images/cup-617422_640.jpg" /></li>
+        <li><img src="./images/fresh-peppers-619132_640.jpg" /></li>
+        <li><img src="./images/keyboard-621830_640.jpg" /></li>
+        <li><img src="./images/landscape-540122_640.jpg" /></li>
+    </ul>
 </div>
 
 </body>
