@@ -5,6 +5,7 @@
     height: 100%;
     padding: 1%;
     box-sizing: border-box;
+    -ms-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
@@ -31,6 +32,7 @@
 .theme-default[data-carousel-3d] {
     position: absolute;
     perspective: 1000px;
+    -ms-perspective: 1000px;
     -moz-perspective: 1000px;
     -webkit-perspective: 1000px;
     list-style-type: none;
@@ -45,6 +47,7 @@
 }
 [data-child-content] {
     transform-origin: 0px 0px;
+    -ms-transform-origin: 0px 0px;
     -moz-transform-origin: 0px 0px;
     -webkit-transform-origin: 0px 0px;
 }

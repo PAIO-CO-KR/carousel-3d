@@ -169,6 +169,7 @@
 
                 //animate duration.
                 $(child).css('transition', (this._animateDuration / 1000) + 's');
+                $(child).css('-ms-transition', (this._animateDuration / 1000) + 's');
                 $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
                 $(child).css('-webkit-transition', (this._animateDuration / 1000) + 's');
             }.bind(this));
@@ -181,6 +182,8 @@
         $(this._nextButton).click(function () {
             this.next();
         }.bind(this));
+
+        this._rendererInit();
 	};
 
 
@@ -227,11 +230,13 @@
         $(wrapper).css('left', ($(this._panel).outerWidth() - wrapperWidth) / 2);
         $(wrapper).css('top', ($(this._panel).outerHeight() - wrapperHeight) / 2);
         $(this._children).each(function (index, child) {
+            var diffWidth = $(child).outerWidth() - $(child).innerWidth();
+            var diffHeight = $(child).outerHeight() - $(child).innerHeight();
             $(child).outerWidth(wrapperWidth);
             $(child).outerHeight(wrapperHeight);
-            window.setTimeout(function () {
-                this._childResize($(child).data('content'));
-            }.bind(this), this._animateDuration);
+            $(child).data('width', wrapperWidth - diffWidth);
+            $(child).data('height', wrapperHeight - diffHeight);
+            this._childResize($(child).data('content'));
         }.bind(this));
         this._rotateChildren(this._currentIndex);
     };
@@ -247,6 +252,21 @@
          *
          */
         _ieTransform: false,
+
+        /**
+         *
+         * @private
+         */
+        _rendererInit: function () {
+            $(this._children).each(function (index, child) {
+                if (!this._ieTransform) {
+                    $(child).css('transform-origin', '0px 0px');
+                    $(child).css('-ms-transform-origin', '0px 0px');
+                    $(child).css('-moz-transform-origin', '0px 0px');
+                    $(child).css('-webkit-transform-origin', '0px 0px');
+                }
+            }.bind(this));
+        },
 
         /**
          *
@@ -267,9 +287,39 @@
          *
          * @private
          */
-        _childResize: function (child) {
+        _childResize: function (childContent) {
+            var scale = 1;
+            var contentWidth = $(childContent).outerWidth();
+            var contentHeight = $(childContent).outerHeight();
+            if (this._ieTransform && $(childContent).data('scale')) {
+                contentWidth = contentWidth / $(childContent).data('scale');
+                contentHeight = contentHeight / $(childContent).data('scale');
+            }
+            var child = $(childContent).parent()[0];
+            var childWidth = $(child).width();
+            var childHeight = $(child).height();
             $(child).data('width', $(child).outerWidth());
             $(child).data('height', $(child).outerHeight());
+            if ((contentWidth / contentHeight) > this._aspectRatio) {
+                scale = childWidth / contentWidth;
+            } else {
+                scale = childHeight / contentHeight;
+            }
+            var scaledWidth = contentWidth * scale;
+            var scaledHeight = contentHeight * scale;
+
+            $(childContent).css('left', (childWidth -  scaledWidth) / 2 + 'px');
+            $(childContent).css('top', (childHeight -  scaledHeight) / 2 + 'px');
+            if (this._ieTransform) {
+                $(childContent).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + scale + ', M12=0, M21=0, M22=' + scale + ', SizingMethod="auto expand")');
+                $(childContent).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + scale + ', M12=0, M21=0, M22=' + scale + ', SizingMethod="auto expand")');
+                $(childContent).data('scale', scale);
+            } else {
+                $(childContent).css('transform', 'scale(' + scale + ')');
+                $(childContent).css('-ms-transform', 'scale(' + scale + ')');
+                $(childContent).css('-moz-transform', 'scale(' + scale + ')');
+                $(childContent).css('-webkit-transform', 'scale(' + scale + ')');
+            }
         },
 
         /**
@@ -280,17 +330,11 @@
          * @private
          */
         _rotateChild: function (child, index, degree) {
-            $(child).css('overflow', 'hidden');
-            var baseScale = 1;
+            var content = $(child).data('content');
             var width = $(child).data('width');
             var height = $(child).data('height');
             var wrapperWidth = $(this._childrenWrapper).width();
             var wrapperHeight = $(this._childrenWrapper).height();
-            if ((width / height) > this._aspectRatio) {
-                baseScale = wrapperWidth / width;
-            } else {
-                baseScale = wrapperHeight / height;
-            }
 
             var childDegree = ((360 / this._children.length) * index) + degree;
             $(child).animate({
@@ -304,22 +348,20 @@
                         var halfDegreeRange = 360 / this._children.length / 2;
                         var perspectiveScale = Math.abs(Math.sin(Math.PI / 180 * (now + halfDegreeRange)) - Math.sin(Math.PI / 180 * (now - halfDegreeRange)))
                             / (Math.sin(Math.PI / 180 * halfDegreeRange) * 2) * cos;
-                        var heightScale = baseScale * (cos + 1) / 2;
-                        var widthScale = baseScale * perspectiveScale;
+                        var heightScale = (cos + 1) / 2;
+                        var widthScale = (perspectiveScale + 1) / 2;
                         var dx = sin * wrapperWidth / 2 + (width * widthScale / 2 * sin);
 
                         $(tween.elem).css('z-index', Math.floor((cos + 1) * 100));
-                        $(tween.elem).css('top', (wrapperHeight - height * heightScale) / 2 + 'px');
+                        $(tween.elem).css('top', Math.floor((wrapperHeight - height * heightScale) / 2) + 'px');
                         $(tween.elem).css('left', ((wrapperWidth - width * widthScale) / 2 + dx) + 'px');
                         if (this._ieTransform) {
                             $(tween.elem).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand"), progid:DXImageTransform.Microsoft.Alpha(Opacity=' + cos * 100 + ')');
                             $(tween.elem).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + widthScale + ', M12=0, M21=0, M22=' + heightScale + ', SizingMethod="auto expand"), progid:DXImageTransform.Microsoft.Alpha(Opacity=' + cos * 100 + ')');
                         } else {
                             $(tween.elem).css('opacity', cos);
-                            $(tween.elem).css('transform-origin', '0px 0px');
-                            $(tween.elem).css('-moz-transform-origin', '0px 0px');
-                            $(tween.elem).css('-webkit-transform-origin', '0px 0px');
                             $(tween.elem).css('transform', 'scale(' + widthScale + ', ' + heightScale + ')');
+                            $(tween.elem).css('-ms-transform', 'scale(' + widthScale + ', ' + heightScale + ')');
                             $(tween.elem).css('-moz-transform', 'scale(' + widthScale + ', ' + heightScale + ')');
                             $(tween.elem).css('-webkit-transform', 'scale(' + widthScale + ', ' + heightScale + ')');
                         }
@@ -343,6 +385,14 @@
 
         /**
          *
+         * @private
+         */
+        _rendererInit: function () {
+
+        },
+
+        /**
+         *
          * @param index
          * @private
          */
@@ -358,8 +408,8 @@
          */
         _childResize: function (childContent) {
             var child = $(childContent).parent();
-            var width = $(child).width();
-            var height = $(child).height();
+            var width = $(child).data('width');
+            var height = $(child).data('height');
             var contentWidth = $(childContent).width();
             var contentHeight = $(childContent).height();
             var scale = width / contentWidth;
@@ -372,6 +422,7 @@
             transformText += ' translate(' + ((width - scaledWidth) / 2) + 'px, ' + ((height - scaledHeight) / 2) + 'px)';
             transformText += ' scale(' + scale + ')';
             $(childContent).css('transform', transformText);
+            $(childContent).css('-ms-transform', transformText);
             $(childContent).css('-moz-transform', transformText);
             $(childContent).css('-webkit-transform', transformText);
         },
@@ -394,6 +445,7 @@
             transformText += ' translateZ(' + this._tz * (1 + this._spacing) + 'px)';
 
             $(child).css('transform', transformText);
+            $(child).css('-ms-transform', transformText);
             $(child).css('-moz-transform', transformText);
             $(child).css('-webkit-transform', transformText);
 
