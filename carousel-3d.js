@@ -483,7 +483,7 @@
 	 * initialize on load
 	 */
     $(function () {
-        $('[data-carousel-3d]').carousel3d();
+        $('[data-carousel-3d]').carousel3d({});
     });
     var windowLoaded = false;
     $(window).load(function () {
