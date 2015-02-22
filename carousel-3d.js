@@ -153,27 +153,25 @@
             this._resize();
         }.bind(this), 1);
 
-        if (this._children) {
-            $(this._children).each(function (index, child) {
-                //current index for selected
-                if ($(child).attr('selected')) {
-                    this._currentIndex = index;
-                }
+        $(this._children).each(function (index, child) {
+            //current index for selected
+            if ($(child).attr('selected')) {
+                this._currentIndex = index;
+            }
 
-                //resize
-                bindResize($(child).data('content'), this._childResize.bind(this));
-                //TODO some browser do not call resize for the first time. work around. fix this later.
-                setTimeout(function () {
-                    this._childResize($(child).data('content'));
-                }.bind(this), 1);
+            //resize
+            bindResize($(child).data('content'), this._childResize.bind(this));
+            //TODO some browser do not call resize for the first time. work around. fix this later.
+            setTimeout(function () {
+                this._childResize($(child).data('content'));
+            }.bind(this), 1);
 
-                //animate duration.
-                $(child).css('transition', (this._animateDuration / 1000) + 's');
-                $(child).css('-ms-transition', (this._animateDuration / 1000) + 's');
-                $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
-                $(child).css('-webkit-transition', (this._animateDuration / 1000) + 's');
-            }.bind(this));
-        }
+            //animate duration.
+            $(child).css('transition', (this._animateDuration / 1000) + 's');
+            $(child).css('-ms-transition', (this._animateDuration / 1000) + 's');
+            $(child).css('-moz-transition', (this._animateDuration / 1000) + 's');
+            $(child).css('-webkit-transition', (this._animateDuration / 1000) + 's');
+        }.bind(this));
 
         //attach event for prev/next buttons.
         $(this._prevButton).click(function () {
