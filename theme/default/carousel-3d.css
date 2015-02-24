@@ -46,11 +46,6 @@
     border: 5px solid rgba(237, 237, 236, 1);
 }
 [data-child-content] {
-    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-    display: -ms-flexbox;      /* TWEENER - IE 10 */
-    display: -webkit-flex;     /* NEW - Chrome */
-    display: flex;
     transform-origin: 0px 0px;
     -ms-transform-origin: 0px 0px;
     -moz-transform-origin: 0px 0px;
