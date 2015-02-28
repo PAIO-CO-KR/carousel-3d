@@ -101,4 +101,4 @@ $('#myCarousel').on('select', function (evt, index) {
 
 ## License
 
-MIT.
+MIT © PAIO
