@@ -74,7 +74,7 @@ module.exports = function (grunt) {
       },
       src: {
         files: '<%= jshint.src.src %>',
-        tasks: ['jshint:src', 'qunit']
+        tasks: ['jshint:src', 'browserify:dev', 'qunit']
       },
       test: {
         files: '<%= jshint.test.src %>',
@@ -94,6 +94,16 @@ module.exports = function (grunt) {
           port: 9000
         }
       }
+    },
+    browserify: {
+      dev: {
+        src: ['./src/carousel-3d.js'],
+        dest: './dist/jquery.carousel-3d.js',
+        options: {
+          debug: true,
+          external: ['jquery', 'waitForImages', 'modernizr']
+        }
+      }
     }
   });
 
@@ -105,4 +115,5 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('serve', ['connect', 'watch']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
+  grunt.registerTask('build', ['browserify:dev']);
 };
