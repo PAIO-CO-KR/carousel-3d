@@ -34,19 +34,18 @@
 
 
 
-
   /**
    * Exposed to jquery.
    * @returns {*}
    */
-  $.fn.carousel3d = function() {
+  $.fn.Carousel3d = function() {
     var self = this, opt = arguments[0], args = Array.prototype.slice.call(arguments,1), l = self.length, i = 0, ret;
     for(i; i < l; i += 1) {
       if (typeof opt === 'object' || typeof opt === 'undefined') {
-        self[i].carousel3d =  new Carousel3d(self[i], opt);
+        self[i].Carousel3d =  new Carousel3d(self[i], opt);
       }
       else {
-        ret = self[i].carousel3d[opt].apply(self[i].carousel3d, args);
+        ret = self[i].Carousel3d[opt].apply(self[i].Carousel3d, args);
       }
       if (ret !== undefined) {
         return ret;
@@ -61,7 +60,7 @@
    * initialize on load
    */
   $(function () {
-    $('[data-carousel-3d]').carousel3d();
+    $('[data-carousel-3d]').Carousel3d();
   });
 
   return Carousel3d;
