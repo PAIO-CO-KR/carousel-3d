@@ -100,8 +100,7 @@ module.exports = function (grunt) {
         src: ['./src/carousel-3d.js'],
         dest: './dist/jquery.carousel-3d.js',
         options: {
-          debug: true,
-          external: ['jquery', 'waitForImages', 'modernizr']
+          debug: true
         }
       }
     }

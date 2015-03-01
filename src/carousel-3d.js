@@ -6,29 +6,47 @@
  * Licensed under the MIT license.
  */
 
-/**
- * Carousel3d
- */
-(function(factory) {
+(function() {
   'use strict';
-  if (typeof define === 'function' && define.amd) {
-    define(['jquery', 'modernizr', 'waitForImages'], factory);
-  } else if (typeof exports !== 'undefined') {
-    module.exports = factory(jQuery, Modernizr);
-  } else {
-    factory(jQuery, Modernizr);
-  }
-}(function($, Modernizr) {
-  'use strict';
-  console.log($);
-  console.log(Modernizr);
+
+  var $ = window.jQuery;
+  var Modernizr = window.Modernizr;
+  var ChildrenWrapper = require('./childrenWrapper');
+
   /**
    * constructor
    * @param panel
    * @constructor
    */
   var Carousel3d = function (panel) {
-    console.log(panel);
+    //manipulate DOM.
+    this._panel = panel;
+
+    var childrenWrapper = $('<div data-children-wrapper />')[0];
+    $(panel).append(childrenWrapper);
+    $(this._panel).children().each(function (index, child) {
+      $(childrenWrapper).append(child);
+    });
+    this._childrenWrapper = new ChildrenWrapper(childrenWrapper);
+
+    //create prev/next buttons
+    this._prevButton = $('<div data-prev-button></div>')[0];
+    $(this._panel).append(this._prevButton);
+    this._nextButton = $('<div data-next-button></div>')[0];
+    $(this._panel).append(this._nextButton);
+    this._children = [];
+
+    //extend renderer
+    if (Modernizr.csstransforms3d) {
+      //$.extend(this, renderer3DTransform);
+    }
+    else if (Modernizr.csstransforms) {
+      //$.extend(this, rendererTransform);
+    }
+    else {
+      //$.extend(this, rendererTransform);
+      this._ieTransform = true;
+    }
   };
 
 
@@ -54,7 +72,6 @@
   };
 
 
-
   /**
    * initialize on load
    */
@@ -62,5 +79,4 @@
     $('[data-carousel-3d]').Carousel3d();
   });
 
-  return Carousel3d;
-}));
+})();
