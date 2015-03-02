@@ -23,12 +23,13 @@
     //manipulate DOM.
     this._panel = panel;
 
-    var childrenWrapper = $('<div data-children-wrapper />')[0];
-    $(panel).append(childrenWrapper);
-    $(this._panel).children().each(function (index, child) {
-      $(childrenWrapper).append(child);
-    });
-    this._childrenWrapper = new ChildrenWrapper(childrenWrapper);
+    //create children wrapper
+    //var childrenWrapper = $('<div data-children-wrapper />')[0];
+    //$(panel).append(childrenWrapper);
+    //$(this._panel).children().each(function (index, child) {
+    //  $(childrenWrapper).append(child);
+    //});
+    this._childrenWrapper = new ChildrenWrapper(this._panel, $(this._panel).children());
 
     //create prev/next buttons
     this._prevButton = $('<div data-prev-button></div>')[0];
@@ -82,7 +83,7 @@
 
 })();
 
-},{"./childrenWrapper":2}],2:[function(require,module,exports){
+},{"./childrenWrapper":3}],2:[function(require,module,exports){
 /*
  *
  *
@@ -93,11 +94,52 @@
 (function () {
   "use strict";
 
-  var ChildrenWrapper = function (el) {
-    console.log(el);
+  var $ = window.jQuery;
+
+  var Child = function (wrapper, el) {
+    this._wrapper = wrapper;
+    this._el = el;
+    console.log($);
   };
+
+  Child.prototype._wrapper = null;
+
+  Child.prototype._el = null;
+
+  module.exports = Child;
+})();
+
+},{}],3:[function(require,module,exports){
+/*
+ *
+ *
+ *
+ * Copyright (c) 2015 PAIO
+ * Licensed under the MIT license.
+ */
+(function () {
+  "use strict";
+
+  var $ = window.jQuery;
+  var Child = require('./child');
+
+  var ChildrenWrapper = function (panel, children) {
+    this._panel = panel;
+    this._el = $('<div data-children-wrapper></div>')[0];
+    $(panel).append(this._el);
+    $(children).each(function (index, child) {
+      $(this._el).append(child);
+      this._children.push(new Child(child));
+    }.bind(this));
+  };
+
+  ChildrenWrapper.prototype._panel = null;
+
+  ChildrenWrapper.prototype._el = null;
+
+  ChildrenWrapper.prototype._children = [];
 
   module.exports = ChildrenWrapper;
 })();
 
-},{}]},{},[1]);
+},{"./child":2}]},{},[1]);

@@ -22,12 +22,13 @@
     //manipulate DOM.
     this._panel = panel;
 
-    var childrenWrapper = $('<div data-children-wrapper />')[0];
-    $(panel).append(childrenWrapper);
-    $(this._panel).children().each(function (index, child) {
-      $(childrenWrapper).append(child);
-    });
-    this._childrenWrapper = new ChildrenWrapper(childrenWrapper);
+    //create children wrapper
+    //var childrenWrapper = $('<div data-children-wrapper />')[0];
+    //$(panel).append(childrenWrapper);
+    //$(this._panel).children().each(function (index, child) {
+    //  $(childrenWrapper).append(child);
+    //});
+    this._childrenWrapper = new ChildrenWrapper(this._panel, $(this._panel).children());
 
     //create prev/next buttons
     this._prevButton = $('<div data-prev-button></div>')[0];
