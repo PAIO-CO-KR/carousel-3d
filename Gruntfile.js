@@ -97,7 +97,7 @@ module.exports = function (grunt) {
     },
     browserify: {
       dev: {
-        src: ['./src/carousel-3d.js'],
+        src: ['./src/Carousel3d.js'],
         dest: './dist/jquery.carousel-3d.js',
         options: {
           debug: true

@@ -11,7 +11,8 @@
 
   var $ = window.jQuery;
   var Modernizr = window.Modernizr;
-  var ChildrenWrapper = require('./childrenWrapper');
+  var ChildrenWrapper = require('./ChildrenWrapper');
+  var Child = require('./Child');
 
   /**
    * constructor
@@ -19,23 +20,18 @@
    * @constructor
    */
   var Carousel3d = function (panel) {
-    //manipulate DOM.
-    this._panel = panel;
-
-    //create children wrapper
-    //var childrenWrapper = $('<div data-children-wrapper />')[0];
-    //$(panel).append(childrenWrapper);
-    //$(this._panel).children().each(function (index, child) {
-    //  $(childrenWrapper).append(child);
-    //});
-    this._childrenWrapper = new ChildrenWrapper(this._panel, $(this._panel).children());
+    this.el = panel;
+    var childrenWrapperObj = new ChildrenWrapper(this);
+    $(this.el).children().each(function (index, childContent) {
+      childrenWrapperObj.appendChild(new Child(childContent));
+    });
 
     //create prev/next buttons
     this._prevButton = $('<div data-prev-button></div>')[0];
-    $(this._panel).append(this._prevButton);
+    $(this.el).append(this._prevButton);
     this._nextButton = $('<div data-next-button></div>')[0];
-    $(this._panel).append(this._nextButton);
-    this._children = [];
+    $(this.el).append(this._nextButton);
+    this._childObjArray = [];
 
     //extend renderer
     if (Modernizr.csstransforms3d) {
@@ -48,6 +44,23 @@
       //$.extend(this, rendererTransform);
       this._ieTransform = true;
     }
+  };
+
+
+  /**
+   * Carousel-3D panel element
+   * @type {element}
+   */
+  Carousel3d.prototype.el = null;
+
+
+  /**
+   * append ChildrenWrapper object
+   * @param childrenWrapperObj
+   */
+  Carousel3d.prototype.appendChildrenWrapper = function (childrenWrapperObj) {
+    this._childrenWrapperObj = childrenWrapperObj;
+    $(this.el).append(childrenWrapperObj.el);
   };
 
 

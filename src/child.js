@@ -10,15 +10,16 @@
 
   var $ = window.jQuery;
 
-  var Child = function (wrapper, el) {
-    this._wrapper = wrapper;
-    this._el = el;
+  var Child = function (el) {
+    this.el = el;
     console.log($);
   };
 
-  Child.prototype._wrapper = null;
-
-  Child.prototype._el = null;
+  /**
+   * Child element
+   * @type {element}
+   */
+  Child.prototype.el = null;
 
   module.exports = Child;
 })();
