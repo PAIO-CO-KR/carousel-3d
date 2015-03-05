@@ -56,6 +56,12 @@
    */
   Carousel3d.prototype.el = null;
 
+  Carousel3d.prototype.option = {
+    aspectRatio: 1.5,
+    spacing: 0.05,
+    animateDuration: 1000
+  };
+
 
   /**
    * append ChildrenWrapper object
@@ -116,7 +122,7 @@
     this._childrenWrapperObj = childrenWrapperObj;
     this._childContent = childContent;
 
-    var wrapper = $('<div />')[0];
+    var wrapper = $('<div data-child-wrapper />')[0];
     this._childWrapper = this.el = wrapper;
     $(wrapper).append(childContent);
   };

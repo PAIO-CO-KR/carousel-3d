@@ -55,6 +55,12 @@
    */
   Carousel3d.prototype.el = null;
 
+  Carousel3d.prototype.option = {
+    aspectRatio: 1.5,
+    spacing: 0.05,
+    animateDuration: 1000
+  };
+
 
   /**
    * append ChildrenWrapper object

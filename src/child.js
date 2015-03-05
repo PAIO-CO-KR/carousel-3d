@@ -15,7 +15,7 @@
     this._childrenWrapperObj = childrenWrapperObj;
     this._childContent = childContent;
 
-    var wrapper = $('<div />')[0];
+    var wrapper = $('<div data-child-wrapper />')[0];
     this._childWrapper = this.el = wrapper;
     $(wrapper).append(childContent);
   };
