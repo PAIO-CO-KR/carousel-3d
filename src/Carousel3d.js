@@ -21,9 +21,11 @@
    */
   var Carousel3d = function (panel) {
     this.el = panel;
+    var $children = $(panel).children();
     var childrenWrapperObj = new ChildrenWrapper(this);
-    $(this.el).children().each(function (index, childContent) {
-      childrenWrapperObj.appendChild(new Child(childContent));
+    this.appendChildrenWrapper(childrenWrapperObj);
+    $children.each(function (index, childContent) {
+      childrenWrapperObj.appendChild(new Child(childrenWrapperObj, childContent));
     });
 
     //create prev/next buttons

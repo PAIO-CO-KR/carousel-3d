@@ -13,8 +13,6 @@
   var ChildrenWrapper = function (panelObj) {
     this.el = $('<div data-children-wrapper></div>')[0];
     this._panelObj = panelObj;
-    panelObj.appendChildrenWrapper(this);
-    console.log(this._panelObj);
   };
 
   ChildrenWrapper.prototype._panelObj = null;

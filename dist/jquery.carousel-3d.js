@@ -22,9 +22,11 @@
    */
   var Carousel3d = function (panel) {
     this.el = panel;
+    var $children = $(panel).children();
     var childrenWrapperObj = new ChildrenWrapper(this);
-    $(this.el).children().each(function (index, childContent) {
-      childrenWrapperObj.appendChild(new Child(childContent));
+    this.appendChildrenWrapper(childrenWrapperObj);
+    $children.each(function (index, childContent) {
+      childrenWrapperObj.appendChild(new Child(childrenWrapperObj, childContent));
     });
 
     //create prev/next buttons
@@ -108,17 +110,25 @@
   "use strict";
 
   var $ = window.jQuery;
+  //var Modernizr = window.Modernizr;
 
-  var Child = function (el) {
-    this.el = el;
-    console.log($);
+  var Child = function (childrenWrapperObj, childContent) {
+    this._childrenWrapperObj = childrenWrapperObj;
+    this._childContent = childContent;
+
+    var wrapper = $('<div />')[0];
+    this._childWrapper = this.el = wrapper;
+    $(wrapper).append(childContent);
   };
 
-  /**
-   * Child element
-   * @type {element}
-   */
+
+  Child.prototype._childrenWrapperObj = null;
+
+  Child.prototype._chlidContent = null;
+
   Child.prototype.el = null;
+
+  Child.prototype._cihldWrapper = null;
 
   module.exports = Child;
 })();
@@ -139,8 +149,6 @@
   var ChildrenWrapper = function (panelObj) {
     this.el = $('<div data-children-wrapper></div>')[0];
     this._panelObj = panelObj;
-    panelObj.appendChildrenWrapper(this);
-    console.log(this._panelObj);
   };
 
   ChildrenWrapper.prototype._panelObj = null;

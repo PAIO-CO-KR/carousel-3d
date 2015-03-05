@@ -9,17 +9,25 @@
   "use strict";
 
   var $ = window.jQuery;
+  //var Modernizr = window.Modernizr;
 
-  var Child = function (el) {
-    this.el = el;
-    console.log($);
+  var Child = function (childrenWrapperObj, childContent) {
+    this._childrenWrapperObj = childrenWrapperObj;
+    this._childContent = childContent;
+
+    var wrapper = $('<div />')[0];
+    this._childWrapper = this.el = wrapper;
+    $(wrapper).append(childContent);
   };
 
-  /**
-   * Child element
-   * @type {element}
-   */
+
+  Child.prototype._childrenWrapperObj = null;
+
+  Child.prototype._chlidContent = null;
+
   Child.prototype.el = null;
+
+  Child.prototype._cihldWrapper = null;
 
   module.exports = Child;
 })();
