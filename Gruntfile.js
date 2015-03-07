@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function (grunt) {
-  var config = {
+  var cfg = {
     src: {
       js: './src',
       css: './styles'
@@ -9,6 +9,7 @@ module.exports = function (grunt) {
       base: './dist',
       css: './dist/styles'
     },
+    test: './test',
     example: './example'
   };
 
@@ -28,7 +29,7 @@ module.exports = function (grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed MIT */\n',
 
-    cfg: config,
+    cfg: cfg,
 
     // Task configuration.
     clean: {
@@ -40,8 +41,8 @@ module.exports = function (grunt) {
         stripBanners: true
       },
       dist: {
-        src: ['src/<%= pkg.name %>.js'],
-        dest: 'dist/jquery.<%= pkg.name %>.js'
+        src: ['<%= cfg.src.js %>/<%= pkg.name %>.js'],
+        dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js'
       }
     },
     uglify: {
@@ -50,7 +51,7 @@ module.exports = function (grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/jquery.<%= pkg.name %>.min.js'
+        dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.min.js'
       }
     },
     qunit: {
@@ -72,35 +73,15 @@ module.exports = function (grunt) {
       },
       src: {
         options: {
-          jshintrc: 'src/.jshintrc'
+          jshintrc: '<%= cfg.src.js %>/.jshintrc'
         },
-        src: ['src/**/*.js']
+        src: ['<%= cfg.src.js %>/**/*.js']
       },
       test: {
         options: {
-          jshintrc: 'test/.jshintrc'
+          jshintrc: '<%= cfg.test %>/.jshintrc'
         },
-        src: ['test/**/*.js']
-      }
-    },
-    watch: {
-      gruntfile: {
-        files: '<%= jshint.gruntfile.src %>',
-        tasks: ['jshint:gruntfile']
-      },
-      src: {
-        files: '<%= jshint.src.src %>',
-        tasks: ['browserify:dev', 'jshint:src', 'qunit']
-      },
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'qunit']
-      },
-      html: {
-        files: ['example/*.html', 'example/*.js', '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js', './dist/*.css'],
-        options: {
-          livereload: true
-        }
+        src: ['<%= cfg.test %>/**/*.js']
       }
     },
     connect: {
@@ -134,6 +115,30 @@ module.exports = function (grunt) {
       },
       dev: {},
       dist: {}
+    },
+    watch: {
+      gruntfile: {
+        files: '<%= jshint.gruntfile.src %>',
+        tasks: ['jshint:gruntfile']
+      },
+      src: {
+        files: '<%= jshint.src.src %>',
+        tasks: ['browserify:dev', 'jshint:src', 'qunit']
+      },
+      test: {
+        files: '<%= jshint.test.src %>',
+        tasks: ['jshint:test', 'qunit']
+      },
+      html: {
+        files: ['<%= cfg.example %>/*.html', '<%= cfg.example %>/*.js', '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js', '<%= cfg.dist.base %>/*.css'],
+        options: {
+          livereload: true
+        }
+      },
+      compass: {
+        files: ['<%= cfg.src.css %>/*.scss'],
+        tasks: ['compass:dev']
+      }
     }
   });
 
