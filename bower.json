@@ -10,7 +10,6 @@
     "qunit": "~1.12.0",
     "jquery": "~1.9",
     "modernizr": "latest",
-    "waitForImages": "latest",
-    "requirejs-bower": "latest"
+    "waitForImages": "latest"
   }
 }
