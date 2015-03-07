@@ -1,5 +1,18 @@
 'use strict';
 module.exports = function (grunt) {
+  var config = {
+    src: {
+      js: './src',
+      css: './styles'
+    },
+    dist: {
+      base: './dist',
+      css: './dist/styles'
+    },
+    example: './example'
+  };
+
+
   // Load all grunt tasks
   require('load-grunt-tasks')(grunt);
   // Show elapsed time at the end
@@ -14,9 +27,12 @@ module.exports = function (grunt) {
       '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed MIT */\n',
+
+    cfg: config,
+
     // Task configuration.
     clean: {
-      files: ['dist']
+      files: ['<%= cfg.dist.base %>']
     },
     concat: {
       options: {
@@ -74,14 +90,14 @@ module.exports = function (grunt) {
       },
       src: {
         files: '<%= jshint.src.src %>',
-        tasks: ['jshint:src', 'browserify:dev', 'qunit']
+        tasks: ['browserify:dev', 'jshint:src', 'qunit']
       },
       test: {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
       },
       html: {
-        files: ['example/*.html', 'example/*.js', '<%= jshint.src.src %>', '**/*.css'],
+        files: ['example/*.html', 'example/*.js', '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js', './dist/*.css'],
         options: {
           livereload: true
         }
@@ -97,22 +113,37 @@ module.exports = function (grunt) {
     },
     browserify: {
       dev: {
-        src: ['./src/Carousel3d.js'],
-        dest: './dist/jquery.carousel-3d.js',
+        src: ['<%= cfg.src.js %>/Carousel3d.js'],
+        dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js',
         options: {
           debug: true
         }
+      },
+      dist: {
+        src: ['<%= cfg.src.js %>/Carousel3d.js'],
+        dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js'
       }
+    },
+    compass: {
+      options: {
+        sassDir: '<%= cfg.src.css %>',
+        cssDir: '<%= cfg.dist.css %>',
+        generatedImagesDir: '<%= cfg.src.css %>/images',
+        javascriptsDir: '<%= cfg.src.js %>',
+        fontsDir: '<%= cfg.src.css %>/fonts'
+      },
+      dev: {},
+      dist: {}
     }
   });
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'connect', 'qunit', 'clean', 'concat', 'uglify']);
+  grunt.registerTask('default', ['clean', 'browserify:dev', 'compass:dev', 'test']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
-  grunt.registerTask('build', ['browserify:dev']);
+  grunt.registerTask('build', ['clean', 'browserify:dist', 'compass:dist', 'uglify', 'test']);
 };

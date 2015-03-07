@@ -63,6 +63,15 @@
 
 
   /**
+   * append chlid
+   * @param content
+   */
+  Carousel3d.prototype.appendChild = function (content) {
+    this._childrenWrapperObj.appendChild(new Child(this._childrenWrapperObj, content));
+  };
+
+
+  /**
    * append ChildrenWrapper object
    * @param childrenWrapperObj
    */

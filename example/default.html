@@ -3,19 +3,28 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title></title>
-  <script src="http://10.211.55.2:35729/livereload.js"></script>
+  <script src="http://localhost:35729/livereload.js"></script>
   <script src="../bower_components/jquery/jquery.js"></script>
   <script src="../bower_components/waitForImages/dist/jquery.waitforimages.js"></script>
   <script src="../bower_components/modernizr/modernizr.js"></script>
   <script src="../dist/jquery.carousel-3d.js"></script>
+
+  <style>
+    .wrapper {
+      width: 100%;
+      height: 300px;
+    }
+  </style>
 </head>
 <body>
-<div data-carousel-3d>
-  <img src="./image/1.jpg" />
-  <img src="./image/2.jpg" />
-  <img src="./image/3.jpg" />
-  <img src="./image/4.jpg" />
-  <img src="./image/5.jpg" />
+<div class="wrapper">
+  <div data-carousel-3d>
+    <img src="./image/1.jpg" />
+    <img src="./image/2.jpg" />
+    <img src="./image/3.jpg" />
+    <img src="./image/4.jpg" />
+    <img src="./image/5.jpg" />
+  </div>
 </div>
 </body>
 </html>
