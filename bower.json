@@ -4,7 +4,8 @@
   "dependencies": {
     "jquery": ">=1.9",
     "modernizr": "latest",
-    "waitForImages": "latest"
+    "waitForImages": "latest",
+    "javascript-detect-element-resize": "latest"
   },
   "devDependencies": {
     "qunit": "~1.12.0",

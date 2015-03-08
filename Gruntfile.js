@@ -10,7 +10,8 @@ module.exports = function (grunt) {
       css: './dist/styles'
     },
     test: './test',
-    example: './example'
+    example: './example',
+    tmp: './.tmp'
   };
 
 
@@ -41,7 +42,7 @@ module.exports = function (grunt) {
         stripBanners: true
       },
       dist: {
-        src: ['<%= cfg.src.js %>/<%= pkg.name %>.js'],
+        src: ['<%= cfg.src.js %>/jquery.resize.ex.js', '<%= cfg.tmp %>/jquery.<%= pkg.name %>.js'],
         dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js'
       }
     },
@@ -95,14 +96,14 @@ module.exports = function (grunt) {
     browserify: {
       dev: {
         src: ['<%= cfg.src.js %>/Carousel3d.js'],
-        dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js',
+        dest: '<%= cfg.tmp %>/jquery.<%= pkg.name %>.js',
         options: {
           debug: true
         }
       },
       dist: {
         src: ['<%= cfg.src.js %>/Carousel3d.js'],
-        dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js'
+        dest: '<%= cfg.tmp %>/jquery.<%= pkg.name %>.js'
       }
     },
     compass: {
@@ -130,7 +131,7 @@ module.exports = function (grunt) {
         tasks: ['jshint:test', 'qunit']
       },
       html: {
-        files: ['<%= cfg.example %>/*.html', '<%= cfg.example %>/*.js', '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js', '<%= cfg.dist.base %>/*.css'],
+        files: ['<%= cfg.example %>/*.html', '<%= cfg.example %>/*.js', '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js', '<%= cfg.dist.css %>/*.css'],
         options: {
           livereload: true
         }
@@ -143,12 +144,12 @@ module.exports = function (grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'browserify:dev', 'compass:dev', 'test']);
+  grunt.registerTask('default', ['clean', 'browserify:dev', 'concat', 'compass:dev', 'test']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
-  grunt.registerTask('build', ['clean', 'browserify:dist', 'compass:dist', 'uglify', 'test']);
+  grunt.registerTask('build', ['clean', 'browserify:dist', 'compass:dist', 'concat', 'uglify', 'test']);
 };
