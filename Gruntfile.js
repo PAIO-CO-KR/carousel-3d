@@ -123,15 +123,15 @@ module.exports = function (grunt) {
         tasks: ['jshint:gruntfile']
       },
       src: {
-        files: '<%= jshint.src.src %>',
-        tasks: ['browserify:dev', 'jshint:src', 'qunit']
+        files: '<%= cfg.src.js %>/**/*.js',
+        tasks: ['browserify:dev', 'concat']
       },
       test: {
         files: '<%= jshint.test.src %>',
         tasks: ['jshint:test', 'qunit']
       },
       html: {
-        files: ['<%= cfg.example %>/*.html', '<%= cfg.example %>/*.js', '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js', '<%= cfg.dist.css %>/*.css'],
+        files: ['<%= cfg.example %>/*.html', '<%= cfg.example %>/*.js', '<%= cfg.dist.base %>/*.js', '<%= cfg.dist.css %>/*.css'],
         options: {
           livereload: true
         }
