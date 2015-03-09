@@ -1,3 +1,47 @@
-body {
-  color: #ff00f3;
+$carousel-ratio: 2.5;
+$frame-ratio: 1.0;
+
+//debug style
+[data-carousel-3d] {
+  position: relative;
+  border: 5px solid #0040D0;
+  background-color: #5890AD;
+
+  [data-children-wrapper] {
+    border: 5px solid #EE5757;
+    background-color: #e6e6e6;
+  }
+}
+
+
+
+[data-carousel-3d] {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  [data-children-wrapper] {
+
+    [data-child-wrapper] {
+      position: absolute;
+    }
+  }
+}
+
+//data-children-wrapper ratio
+[data-carousel-3d] {
+  &:before {
+    padding-top: 100%/$carousel-ratio;
+    display: block;
+    content: '';
+  }
+
+  $frame-margin: ((($carousel-ratio - $frame-ratio) / $carousel-ratio) / 2) * 100%;
+  [data-children-wrapper] {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: $frame-margin;
+    left: $frame-margin;
+  }
 }

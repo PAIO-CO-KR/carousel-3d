@@ -10,12 +10,15 @@
 
   var $ = window.jQuery;
 
-  var ChildrenWrapper = function (panelObj) {
+  var ChildrenWrapper = function (carousel3dObj) {
+    this._carousel3dObj = carousel3dObj;
+
     this.el = $('<div data-children-wrapper></div>')[0];
-    this._panelObj = panelObj;
+    //this.carouselResize();
+    //$(carousel3dObj.el).resize(this.carouselResize.bind(this));
   };
 
-  ChildrenWrapper.prototype._panelObj = null;
+  ChildrenWrapper.prototype._carousel3dObj = null;
 
   /**
    * ChildrenWrapper element
@@ -24,6 +27,11 @@
   ChildrenWrapper.prototype.el = null;
 
   ChildrenWrapper.prototype._childObjArray = [];
+
+  ChildrenWrapper.prototype.carouselResize = function () {
+    //$(this.el).outerWidth($(this._carousel3dObj.el).width());
+    //$(this.el).outerHeight($(this._carousel3dObj.el).height());
+  };
 
   /**
    * append Child object
