@@ -20,10 +20,19 @@ $frame-ratio: 1.0;
   width: 100%;
   height: 100%;
 
-  [data-children-wrapper] {
+  > [data-children-wrapper] {
 
-    [data-child-wrapper] {
-      position: absolute;
+    > [data-child] {
+      width: 100%;
+      height: 100%;
+
+      > [data-content-wrapper] {
+        position: absolute;
+        transform-origin: 0px 0px;
+        -ms-transform-origin: 0px 0px;
+        -moz-transform-origin: 0px 0px;
+        -webkit-transform-origin: 0px 0px;
+      }
     }
   }
 }
