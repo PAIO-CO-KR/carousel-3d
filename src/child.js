@@ -54,7 +54,7 @@
     var scale = Math.min(horizontalScale, verticalScale);
     var horizontalOffset = Math.floor(($(this.el).innerWidth() - ($(this._content).outerWidth() * scale)) / 2);
     var verticalOffset = Math.floor(($(this.el).innerHeight() - ($(this._content).outerHeight() * scale)) / 2);
-    console.log($(this.el).innerHeight() + ', ' + $(this._content).outerHeight() + ', ' + scale + ', ' + verticalOffset);
+
     $(this.el).css('padding-left', horizontalOffset + 'px');
     $(this.el).css('padding-top', verticalOffset + 'px');
     if (Modernizr.csstransforms) {

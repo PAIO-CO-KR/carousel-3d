@@ -47,6 +47,8 @@
       //$.extend(this, rendererTransform);
       this._ieTransform = true;
     }
+
+    this.rotate(0);
   };
 
 
@@ -79,6 +81,15 @@
   Carousel3d.prototype.appendChildrenWrapper = function (childrenWrapperObj) {
     this._childrenWrapperObj = childrenWrapperObj;
     $(this.el).append(childrenWrapperObj.el);
+  };
+
+
+  /**
+   *
+   * @param index
+   */
+  Carousel3d.prototype.rotate = function (index) {
+    this._childrenWrapperObj.rotate(index);
   };
 
 
