@@ -1,5 +1,7 @@
 $carousel-ratio: 2.5;
-$frame-ratio: 1.0;
+$child-ratio: 1.0;
+$perspective: 1000px;
+$transition: 1s;
 
 //debug style
 [data-carousel-3d] {
@@ -20,16 +22,32 @@ $frame-ratio: 1.0;
 
 
 
+//3d rotate
+[data-carousel-3d] {
+
+  > [data-children-wrapper] {
+    perspective: $perspective;
+    -ms-perspective: $perspective;
+    -moz-perspective: $perspective;
+    -webkit-perspective: $perspective;
+
+    > [data-child] {
+      transition: $transition;
+      -ms-transition: $transition;
+      -moz-transition: $transition;
+      -webkit-transition: $transition;
+    }
+  }
+}
+
+
+//child size
 [data-carousel-3d] {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
 
   > [data-children-wrapper] {
-    perspective: 1000px;
-    -ms-perspective: 1000px;
-    -moz-perspective: 1000px;
-    -webkit-perspective: 1000px;
 
     > [data-child] {
       position: absolute;
@@ -37,10 +55,6 @@ $frame-ratio: 1.0;
       box-sizing: border-box;
       width: 100%;
       height: 100%;
-      transition: 1s;
-      -ms-transition: 1s;
-      -moz-transition: 1s;
-      -webkit-transition: 1s;
 
       > [data-content-wrapper] {
         box-sizing: border-box;
@@ -53,6 +67,7 @@ $frame-ratio: 1.0;
   }
 }
 
+
 //data-children-wrapper ratio
 [data-carousel-3d] {
   &:before {
@@ -61,12 +76,12 @@ $frame-ratio: 1.0;
     content: '';
   }
 
-  $frame-margin: ((($carousel-ratio - $frame-ratio) / $carousel-ratio) / 2) * 100%;
+  $children-wrapper-margin: ((($carousel-ratio - $child-ratio) / $carousel-ratio) / 2) * 100%;
   [data-children-wrapper] {
     position: absolute;
     top: 0;
     bottom: 0;
-    right: $frame-margin;
-    left: $frame-margin;
+    right: $children-wrapper-margin;
+    left: $children-wrapper-margin;
   }
 }
