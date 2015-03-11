@@ -27,7 +27,7 @@
 
   ChildrenWrapper.prototype._tz = 0;
 
-  ChildrenWrapper.prototype._spacing = 0;
+  ChildrenWrapper.prototype._spacing = 0.05;
 
 
   ChildrenWrapper.prototype.currentIndex = function (index) {

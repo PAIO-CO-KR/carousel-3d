@@ -10,19 +10,26 @@ $transition: 1s;
   background: url("./images/default/bg.gif");
 }
 
-//debug style
+//next/prev
 [data-carousel-3d] {
-  position: relative;
-  border: 5px solid #0040D0;
-  background-color: #5890AD;
+  [data-prev-button] {
+    &:before {
+      content: url("./images/default/prev.png");
+    }
+  }
+  [data-next-button] {
+    &:before {
+      content: url("./images/default/next.png");
+    }
+  }
+}
+
+[data-carousel-3d] {
 
   [data-children-wrapper] {
-    border: 5px solid #EE5757;
-    background-color: #e6e6e6;
 
     [data-child] {
-      border: 5px solid #ffe87c;
-      background-color: linen;
+      border: 5px solid #e6e6e6;
     }
   }
 }
