@@ -1,22 +1,14 @@
-$carousel-ratio: 2.5;
-$child-ratio: 1.0;
-$perspective: 1000px;
-$transition: 1s;
-
-//debug style
+// prev/next button
 [data-carousel-3d] {
-  position: relative;
-  border: 5px solid #0040D0;
-  background-color: #5890AD;
-
-  [data-children-wrapper] {
-    border: 5px solid #EE5757;
-    background-color: #e6e6e6;
-
-    [data-child] {
-      border: 5px solid #ffe87c;
-      background-color: linen;
-    }
+  [data-prev-button] {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+  }
+  [data-next-button] {
+    position: absolute;
+    top: 50%;
+    right: 10px;
   }
 }
 

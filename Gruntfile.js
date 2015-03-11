@@ -3,7 +3,7 @@ module.exports = function (grunt) {
   var cfg = {
     src: {
       js: './src',
-      css: './styles'
+      css: './styles/theme'
     },
     dist: {
       base: './dist',
@@ -112,12 +112,21 @@ module.exports = function (grunt) {
       options: {
         sassDir: '<%= cfg.src.css %>',
         cssDir: '<%= cfg.dist.css %>',
-        generatedImagesDir: '<%= cfg.src.css %>/images',
+        imagesDir: '<%= cfg.src.css %>/images',
+        generatedImagesDir: '<%= cfg.dist.css %>/images',
         javascriptsDir: '<%= cfg.src.js %>',
-        fontsDir: '<%= cfg.src.css %>/fonts'
+        fontsDir: '<%= cfg.src.css %>/fonts',
+        sourcemap: true
       },
       dev: {},
       dist: {}
+    },
+    copy: {
+      cssimage: {
+        files: [
+          {expand: true, cwd: '<%= cfg.src.css %>', src: ['images/**'], dest: '<%= cfg.dist.css %>/'}
+        ]
+      }
     },
     watch: {
       gruntfile: {
@@ -141,6 +150,10 @@ module.exports = function (grunt) {
       compass: {
         files: ['<%= cfg.src.css %>/*.scss'],
         tasks: ['compass:dev']
+      },
+      cssimage: {
+        files: ['<%= cfg.src.css %>/images/**'],
+        tasks: ['copy:cssimage']
       }
     }
   });

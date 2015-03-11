@@ -1,0 +1,29 @@
+$carousel-ratio: 2.5;
+$child-ratio: 1.2;
+$perspective: 2000px;
+$transition: 1s;
+
+@import './images/default/bg.gif';
+@import '../common/jquery.carousel-3d';
+
+//background
+[data-carousel-3d] {
+  background: url("./images/default/bg.gif");
+}
+
+//debug style
+[data-carousel-3d] {
+  position: relative;
+  border: 5px solid #0040D0;
+  background-color: #5890AD;
+
+  [data-children-wrapper] {
+    border: 5px solid #EE5757;
+    background-color: #e6e6e6;
+
+    [data-child] {
+      border: 5px solid #ffe87c;
+      background-color: linen;
+    }
+  }
+}

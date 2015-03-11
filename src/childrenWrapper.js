@@ -11,14 +11,9 @@
   var $ = window.jQuery;
 
   var ChildrenWrapper = function (carousel3dObj) {
-    this._carousel3dObj = carousel3dObj;
-
     this.el = $('<div data-children-wrapper></div>')[0];
-    //this.carouselResize();
-    //$(carousel3dObj.el).resize(this.carouselResize.bind(this));
+    $(carousel3dObj.el).resize(this._resize.bind(this));
   };
-
-  ChildrenWrapper.prototype._carousel3dObj = null;
 
   /**
    * ChildrenWrapper element
@@ -28,13 +23,24 @@
 
   ChildrenWrapper.prototype._childObjArray = [];
 
+  ChildrenWrapper.prototype._currentIndex = 0;
+
   ChildrenWrapper.prototype._tz = 0;
 
   ChildrenWrapper.prototype._spacing = 0;
 
-  ChildrenWrapper.prototype.carouselResize = function () {
-    //$(this.el).outerWidth($(this._carousel3dObj.el).width());
-    //$(this.el).outerHeight($(this._carousel3dObj.el).height());
+
+  ChildrenWrapper.prototype.currentIndex = function (index) {
+    if (typeof index !== 'undefined' && typeof index !== 'object' && !isNaN(index)) {
+      this._currentIndex = index;
+    }
+    return this._currentIndex;
+  };
+
+
+  ChildrenWrapper.prototype._resize = function () {
+    this._tz = ($(this.el).outerWidth() / 2) / Math.tan(Math.PI / this._childObjArray.length);
+    this.rotate(this._currentIndex);
   };
 
   /**
@@ -45,7 +51,7 @@
     this._childObjArray.push(childObj);
     $(this.el).append(childObj.el);
 
-    this._tz = ($(this.el).outerWidth() / 2) / Math.tan(Math.PI / this._childObjArray.length);
+    this._resize();
   };
 
 
@@ -54,9 +60,10 @@
    * @param index
    */
   ChildrenWrapper.prototype.rotate = function (index) {
+    this.currentIndex(index);
     var dDegree = 360 / this._childObjArray.length;
     for (var childIndex = 0; childIndex < this._childObjArray.length; childIndex += 1) {
-      var childDegree = dDegree * (childIndex + index);
+      var childDegree = dDegree * (childIndex - index);
       var transformText = '';
       transformText += ' translateZ(' + -this._tz * (1 + this._spacing) + 'px)';
       transformText += ' rotateY(' + childDegree + 'deg)';

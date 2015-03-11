@@ -62,7 +62,8 @@
       $(this._contentWrapper).css('-ms-transform', 'scale(' + scale + ')');
       $(this._contentWrapper).css('-moz-transform', 'scale(' + scale + ')');
       $(this._contentWrapper).css('-webkit-transform', 'scale(' + scale + ')');
-    } else {
+    }
+    else {
       $(this._contentWrapper).css('filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + scale + ', M12=0, M21=0, M22=' + scale + ', SizingMethod="auto expand")');
       $(this._contentWrapper).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + scale + ', M12=0, M21=0, M22=' + scale + ', SizingMethod="auto expand")');
     }

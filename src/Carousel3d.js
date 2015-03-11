@@ -58,12 +58,6 @@
    */
   Carousel3d.prototype.el = null;
 
-  Carousel3d.prototype.option = {
-    aspectRatio: 1.5,
-    spacing: 0.05,
-    animateDuration: 1000
-  };
-
 
   /**
    * append chlid
@@ -90,6 +84,20 @@
    */
   Carousel3d.prototype.rotate = function (index) {
     this._childrenWrapperObj.rotate(index);
+  };
+
+  /**
+   * make carousel spin prev
+   */
+  Carousel3d.prototype.prev = function () {
+    this.rotate(this._childrenWrapperObj.currentIndex() - 1);
+  };
+
+  /**
+   * make carousel spin next
+   */
+  Carousel3d.prototype.next = function () {
+    this.rotate(this._childrenWrapperObj.currentIndex() + 1);
   };
 
 
