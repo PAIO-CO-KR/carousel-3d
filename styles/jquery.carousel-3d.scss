@@ -10,6 +10,11 @@ $frame-ratio: 1.0;
   [data-children-wrapper] {
     border: 5px solid #EE5757;
     background-color: #e6e6e6;
+
+    [data-child] {
+      border: 5px solid #ffe87c;
+      background-color: linen;
+    }
   }
 }
 
@@ -23,11 +28,14 @@ $frame-ratio: 1.0;
   > [data-children-wrapper] {
 
     > [data-child] {
+      position: absolute;
+      overflow: hidden;
+      box-sizing: border-box;
       width: 100%;
       height: 100%;
 
       > [data-content-wrapper] {
-        position: absolute;
+        box-sizing: border-box;
         transform-origin: 0px 0px;
         -ms-transform-origin: 0px 0px;
         -moz-transform-origin: 0px 0px;

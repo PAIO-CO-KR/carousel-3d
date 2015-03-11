@@ -36,9 +36,10 @@
   Child.prototype._hideUntilLoad = function () {
     $(this._content).css('visibility', 'hidden');
     $(this._contentWrapper).waitForImages(function () {
-      $(this._content).resize(this._resize.bind(this));
       setTimeout(function () {
         this._resize();
+        $(this._content).resize(this._resize.bind(this));
+        $(this.el).resize(this._resize.bind(this));
         $(this._content).css('visibility', 'visible');
       }.bind(this), 1);
     }.bind(this));
@@ -48,12 +49,12 @@
     $(this._contentWrapper).width($(this._content).outerWidth());
     $(this._contentWrapper).height($(this._content).outerHeight());
 
-    var horizontalScale = $(this.el).width() / $(this._contentWrapper).outerWidth();
-    var verticalScale = $(this.el).height() / $(this._contentWrapper).outerHeight();
+    var horizontalScale = $(this.el).innerWidth() / $(this._content).outerWidth();
+    var verticalScale = $(this.el).innerHeight() / $(this._content).outerHeight();
     var scale = Math.min(horizontalScale, verticalScale);
-    var horizontalOffset = Math.floor(($(this.el).width() - ($(this._contentWrapper).outerWidth() * scale)) / 2);
-    var verticalOffset = Math.floor(($(this.el).height() - ($(this._contentWrapper).outerHeight() * scale)) / 2);
-
+    var horizontalOffset = Math.floor(($(this.el).innerWidth() - ($(this._content).outerWidth() * scale)) / 2);
+    var verticalOffset = Math.floor(($(this.el).innerHeight() - ($(this._content).outerHeight() * scale)) / 2);
+    console.log($(this.el).innerHeight() + ', ' + $(this._content).outerHeight() + ', ' + scale + ', ' + verticalOffset);
     $(this.el).css('padding-left', horizontalOffset + 'px');
     $(this.el).css('padding-top', verticalOffset + 'px');
     if (Modernizr.csstransforms) {
@@ -66,6 +67,9 @@
       $(this._contentWrapper).css('-ms-filter', 'progid:DXImageTransform.Microsoft.Matrix(M11=' + scale + ', M12=0, M21=0, M22=' + scale + ', SizingMethod="auto expand")');
     }
   };
+
+
+
 
   module.exports = Child;
 })();
