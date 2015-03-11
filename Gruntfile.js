@@ -98,7 +98,9 @@ module.exports = function (grunt) {
         src: ['<%= cfg.src.js %>/Carousel3d.js'],
         dest: '<%= cfg.tmp %>/jquery.<%= pkg.name %>.js',
         options: {
-          debug: true
+          browserifyOptions: {
+            debug: true
+          }
         }
       },
       dist: {
