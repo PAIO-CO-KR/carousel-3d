@@ -67,7 +67,7 @@
     var dDegree = 360 / this._childObjArray.length;
     var childIndex = 0;
     var childDegree = 0;
-    if (Modernizr.csstransforms3d && false) {
+    if (Modernizr.csstransforms3d) {
       for (childIndex = 0; childIndex < this._childObjArray.length; childIndex += 1) {
         childDegree = dDegree * (childIndex - index);
         var transformText = '';
