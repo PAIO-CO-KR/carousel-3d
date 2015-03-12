@@ -18,7 +18,7 @@
    * @param panel
    * @constructor
    */
-  var Carousel3d = function (carousel) {
+  var Carousel3d = function (carousel) { 
     this.el = carousel;
     this._makeOption();
 
@@ -62,7 +62,10 @@
   };
 
 
-
+  /**
+   * populate option
+   * @private
+   */
   Carousel3d.prototype._makeOption = function () {
     (function () {
       var $wrapper = $('<div data-children-wrapper></div>').hide().appendTo(this.el);
@@ -101,11 +104,28 @@
 
 
   /**
-   *
+   * rotate carousel
    * @param index
    */
   Carousel3d.prototype.rotate = function (index) {
+    var numChildren = this._childrenWrapperObj.numChildren();
+    var iFloor = Math.floor(this._childrenWrapperObj.currentIndex() - numChildren / 2);
+    var iCeil = Math.ceil(this._childrenWrapperObj.currentIndex() + numChildren / 2);
+    while (index < iFloor) {
+      index += numChildren;
+    }
+    while (iCeil < index) {
+      index -= numChildren;
+    }
+
     this._childrenWrapperObj.rotate(index);
+    window.setTimeout(function () {
+      var i = index;
+      while(i < 0) {
+        i += this._childrenWrapperObj.numChildren();
+      }
+      $(this.el).trigger('select', i % this._childrenWrapperObj.numChildren());
+    }.bind(this), this.option.animationDuration);
   };
 
   /**

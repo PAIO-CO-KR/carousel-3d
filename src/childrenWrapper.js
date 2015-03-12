@@ -59,6 +59,15 @@
 
 
   /**
+   * return number of children
+   * @returns {Number}
+   */
+  ChildrenWrapper.prototype.numChildren = function () {
+    return this._childObjArray.length;
+  };
+
+
+  /**
    *
    * @param index
    */
