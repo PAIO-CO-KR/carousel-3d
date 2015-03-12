@@ -10,7 +10,6 @@
   'use strict';
 
   var $ = window.jQuery;
-  var Modernizr = window.Modernizr;
   var ChildrenWrapper = require('./ChildrenWrapper');
   var Child = require('./Child');
 
@@ -37,18 +36,6 @@
     this._nextButton = $('<div data-next-button></div>')[0];
     $(this.el).append(this._nextButton);
     $(this._nextButton).click(this.next.bind(this));
-
-    //extend renderer
-    if (Modernizr.csstransforms3d) {
-      //$.extend(this, renderer3DTransform);
-    }
-    else if (Modernizr.csstransforms) {
-      //$.extend(this, rendererTransform);
-    }
-    else {
-      //$.extend(this, rendererTransform);
-      this._ieTransform = true;
-    }
 
     this.rotate(0);
   };
