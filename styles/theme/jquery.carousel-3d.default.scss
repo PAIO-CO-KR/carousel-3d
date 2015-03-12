@@ -1,6 +1,6 @@
 $carousel-ratio: 2.5;
 $child-ratio: 1.2;
-$perspective: 2000px;
+$perspective: 3000px;
 $transition: 1s;
 
 @import '../common/jquery.carousel-3d';
@@ -32,9 +32,9 @@ $transition: 1s;
     position: absolute;
     content: '';
     left: 0px;
-    top: 50%;
+    top: 0px;
     width: 100%;
-    height: 50%;
+    height: 100%;
     background: url("./images/default/bg.gif") repeat-x;
     background-size: 100% 100%;
     z-index: -999;
