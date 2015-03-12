@@ -20,6 +20,8 @@
 
 //3d rotate
 [data-carousel-3d] {
+  position: relative;
+  overflow: hidden;
 
   > [data-children-wrapper] {
     perspective: $perspective;
