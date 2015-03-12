@@ -148,8 +148,8 @@ module.exports = function (grunt) {
         }
       },
       compass: {
-        files: ['<%= cfg.src.css %>/*.scss'],
-        tasks: ['compass:dev']
+        files: ['<%= cfg.src.css %>/*.scss', '<%= cfg.src.css %>/../common/*.scss'],
+        tasks: ['compass:dev', 'copy:cssimage']
       },
       cssimage: {
         files: ['<%= cfg.src.css %>/images/**'],
