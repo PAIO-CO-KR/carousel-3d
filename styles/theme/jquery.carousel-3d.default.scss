@@ -35,7 +35,7 @@ $transition: 1s;
     top: 50%;
     width: 100%;
     height: 50%;
-    background: url("./images/default/bg.gif") no-repeat;
+    background: url("./images/default/bg.gif") repeat-x;
     background-size: 100% 100%;
     z-index: -999;
   }
