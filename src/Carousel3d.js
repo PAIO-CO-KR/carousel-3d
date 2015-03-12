@@ -24,8 +24,12 @@
     //create chlidrenWrapper, children
     var $children = $(carousel).children();
     var childrenWrapperObj = new ChildrenWrapper(this);
+    var currentIndex = 0;
     this.appendChildrenWrapper(childrenWrapperObj);
     $children.each(function (index, childContent) {
+      if ($(childContent).attr('selected')) {
+        currentIndex = index;
+      }
       this.appendChild(childContent);
     }.bind(this));
 
@@ -37,7 +41,7 @@
     $(this.el).append(this._nextButton);
     $(this._nextButton).click(this.next.bind(this));
 
-    this.rotate(0);
+    this.rotate(currentIndex);
   };
 
 
