@@ -80,6 +80,7 @@
         $(this._childObjArray[childIndex].el).css('-moz-transform', transformText);
         $(this._childObjArray[childIndex].el).css('-webkit-transform', transformText);
 
+        $(this._childObjArray[childIndex].el).css('opacity', Math.cos(Math.PI / 180 * childDegree));
         $(this._childObjArray[childIndex].el).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 100));
       }
     }
