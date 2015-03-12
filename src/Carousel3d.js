@@ -20,6 +20,7 @@
    */
   var Carousel3d = function (carousel) {
     this.el = carousel;
+    this._makeOption();
 
     //create chlidrenWrapper, children
     var $children = $(carousel).children();
@@ -50,6 +51,34 @@
    * @type {element}
    */
   Carousel3d.prototype.el = null;
+
+
+  /**
+   *
+   * @type {{animationDuration: number}}
+   */
+  Carousel3d.prototype.option = {
+    animationDuration: 1000
+  };
+
+
+
+  Carousel3d.prototype._makeOption = function () {
+    (function () {
+      var $wrapper = $('<div data-children-wrapper></div>').hide().appendTo(this.el);
+      var duration = $('<div data-child></div>').hide().appendTo($wrapper).css('transition-duration');
+      $wrapper.remove();
+      if (duration) {
+        if (duration.indexOf('ms') > 0) {
+          this.option.animationDuration = parseInt(duration);
+        }
+        else if (duration.indexOf('s') > 0) {
+          this.option.animationDuration = parseInt(duration) * 1000;
+        }
+      }
+    }.bind(this))();
+
+  };
 
 
   /**

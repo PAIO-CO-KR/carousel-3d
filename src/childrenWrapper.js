@@ -87,7 +87,6 @@
     else {
       var width = $(this.el).width();
       var height = $(this.el).height();
-      var animateDuration = 1000;
 
       var stepFunc = function (now, tween) {
 
@@ -124,7 +123,7 @@
         $(this._childObjArray[childIndex].el).animate({
           '_degree': childDegree
         }, {
-          duration: animateDuration,
+          duration: this._carousel3dObj.option.animationDuration,
           step: stepFunc.bind(this)
         });
       }
