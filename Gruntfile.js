@@ -40,9 +40,10 @@ module.exports = function (grunt) {
       options: {
         banner: '<%= banner %>',
         stripBanners: true
+        //sourceMap: true
       },
       dist: {
-        src: ['<%= cfg.src.js %>/jquery.resize.ex.js', '<%= cfg.tmp %>/jquery.<%= pkg.name %>.js'],
+        src: ['<%= cfg.tmp %>/jquery.<%= pkg.name %>.js', '<%= cfg.src.js %>/jquery.resize.ex.js'],
         dest: '<%= cfg.dist.base %>/jquery.<%= pkg.name %>.js'
       }
     },
@@ -99,7 +100,7 @@ module.exports = function (grunt) {
         dest: '<%= cfg.tmp %>/jquery.<%= pkg.name %>.js',
         options: {
           browserifyOptions: {
-            debug: true
+            //debug: true
           }
         }
       },
