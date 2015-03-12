@@ -159,12 +159,12 @@ module.exports = function (grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', ['clean', 'browserify:dev', 'concat', 'compass:dev', 'test']);
+  grunt.registerTask('default', ['clean', 'browserify:dev', 'concat', 'compass:dev', 'copy:cssimage', 'test']);
   grunt.registerTask('server', function () {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
   grunt.registerTask('serve', ['connect', 'watch']);
   grunt.registerTask('test', ['jshint', 'connect', 'qunit']);
-  grunt.registerTask('build', ['clean', 'browserify:dist', 'compass:dist', 'concat', 'uglify', 'test']);
+  grunt.registerTask('build', ['clean', 'browserify:dist', 'compass:dist', 'copy:cssimage', 'concat', 'uglify', 'test']);
 };
