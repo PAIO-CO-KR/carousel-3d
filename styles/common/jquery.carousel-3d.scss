@@ -2,13 +2,17 @@
 [data-carousel-3d] {
   [data-prev-button] {
     position: absolute;
-    top: 50%;
-    left: 10px;
+    height: 100%;
+    width: 15%;
+    top: 0px;
+    left: 0px;
   }
   [data-next-button] {
     position: absolute;
-    top: 50%;
-    right: 10px;
+    height: 100%;
+    width: 15%;
+    top: 0px;
+    right: 0px;
   }
 }
 

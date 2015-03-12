@@ -7,7 +7,17 @@ $transition: 1s;
 
 //background
 [data-carousel-3d] {
-  background: url("./images/default/bg.gif");
+  &:after {
+    position: absolute;
+    content: '';
+    left: 0px;
+    top: 50%;
+    width: 100%;
+    height: 50%;
+    background: url("./images/default/bg.gif") no-repeat;
+    background-size: 100% 100%;
+    z-index: -999;
+  }
 }
 
 //next/prev
@@ -15,21 +25,31 @@ $transition: 1s;
   [data-prev-button] {
     &:before {
       content: url("./images/default/prev.png");
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 43px;
+      height: 49px;
+      margin: auto;
     }
   }
   [data-next-button] {
     &:before {
       content: url("./images/default/next.png");
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 43px;
+      height: 49px;
+      margin: auto;
     }
   }
 }
 
-[data-carousel-3d] {
-
-  [data-children-wrapper] {
-
-    [data-child] {
-      border: 5px solid #e6e6e6;
-    }
-  }
+[data-child] {
+  border: 5px solid #e6e6e6;
 }
