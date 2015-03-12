@@ -52,13 +52,17 @@
       width: 100%;
       height: 100%;
 
-      > [data-content-wrapper] {
-        box-sizing: border-box;
-        transform-origin: 0px 0px;
-        -ms-transform-origin: 0px 0px;
-        -moz-transform-origin: 0px 0px;
-        -webkit-transform-origin: 0px 0px;
+      > [data-child-frame] {
+
+        > [data-content-wrapper] {
+          box-sizing: border-box;
+          transform-origin: 0px 0px;
+          -ms-transform-origin: 0px 0px;
+          -moz-transform-origin: 0px 0px;
+          -webkit-transform-origin: 0px 0px;
+        }
       }
+
     }
   }
 }

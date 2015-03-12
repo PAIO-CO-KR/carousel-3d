@@ -17,8 +17,10 @@
 
     //manipulate dome
     this.el = $('<div data-child />')[0];
+    this._frame = $('<div data-child-frame />')[0];
     this._contentWrapper = $('<div data-content-wrapper />')[0];
-    $(this.el).append(this._contentWrapper);
+    $(this.el).append(this._frame);
+    $(this._frame).append(this._contentWrapper);
     $(this._contentWrapper).append(content);
 
     this._hideUntilLoad();
@@ -49,12 +51,16 @@
     $(this._contentWrapper).width($(this._content).outerWidth());
     $(this._contentWrapper).height($(this._content).outerHeight());
 
-    var horizontalScale = $(this.el).innerWidth() / $(this._content).outerWidth();
-    var verticalScale = $(this.el).innerHeight() / $(this._content).outerHeight();
+    var horizontalFrameDiff = $(this._frame).outerWidth() - $(this._frame).innerWidth();
+    var vertialFrameDiff = $(this._frame).outerHeight() - $(this._frame).innerHeight();
+    var horizontalScale = ($(this.el).innerWidth() - horizontalFrameDiff) / $(this._content).outerWidth();
+    var verticalScale = ($(this.el).innerHeight() - vertialFrameDiff) / $(this._content).outerHeight();
     var scale = Math.min(horizontalScale, verticalScale);
-    var horizontalOffset = Math.floor(($(this.el).innerWidth() - ($(this._content).outerWidth() * scale)) / 2);
-    var verticalOffset = Math.floor(($(this.el).innerHeight() - ($(this._content).outerHeight() * scale)) / 2);
+    var horizontalOffset = Math.floor(($(this.el).innerWidth() - horizontalFrameDiff - ($(this._content).outerWidth() * scale)) / 2);
+    var verticalOffset = Math.floor(($(this.el).innerHeight() - vertialFrameDiff - ($(this._content).outerHeight() * scale)) / 2);
 
+    $(this._frame).width($(this._content).outerWidth() * scale);
+    $(this._frame).height($(this._content).outerHeight() * scale);
     $(this.el).css('padding-left', horizontalOffset + 'px');
     $(this.el).css('padding-top', verticalOffset + 'px');
     if (Modernizr.csstransforms) {

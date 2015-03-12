@@ -5,6 +5,27 @@ $transition: 1s;
 
 @import '../common/jquery.carousel-3d';
 
+//debug style
+//[data-carousel-3d] {
+//  background: #e6e6e6;
+//  border: 5px solid #ffe87c;
+//
+//  [data-children-wrapper] {
+//    background: #EE5757;
+//    border: 5px solid #5890AD;
+//
+//    [data-child] {
+//      background: #000000;
+//      border: 5px solid #0000FF;
+//
+//      [data-child-frame] {
+//        background: #006600;
+//        border: 5px solid #0b97c4;
+//      }
+//    }
+//  }
+//}
+
 //background
 [data-carousel-3d] {
   &:after {
@@ -50,6 +71,6 @@ $transition: 1s;
   }
 }
 
-[data-child] {
+[data-child-frame] {
   border: 5px solid #e6e6e6;
 }
