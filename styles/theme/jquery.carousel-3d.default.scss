@@ -8,6 +8,11 @@ $transition: 1s;
 //background
 [data-carousel-3d] {
   background: linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  background: -ms-linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  background: -moz-linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  background: -webkit-linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
 }
 
 //border
