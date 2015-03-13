@@ -3,14 +3,20 @@
   "version": "0.2.0",
   "description": "carousel-3d",
   "keywords": [
-    "jquery-plugin"
+    "jquery-plugin",
+    "carousel",
+    "3d",
+    "slider"
   ],
   "author": {
     "name": "PAIO co.,Ltd.",
     "email": "apple@paio.co.kr",
-    "url": "https://github.com/kyuwoo-choi"
+    "url": "https://github.com/PAIO-CO-KR"
   },
-  "repository": "kyuwoo-choi/carousel-3d",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
+  },
   "license": "MIT",
   "scripts": {
     "test": "grunt"
