@@ -1,0 +1,55 @@
+$carousel-ratio: 2.5;
+$child-ratio: 1.2;
+$perspective: 3000px;
+$transition: 1s;
+
+@import '../common/jquery.carousel-3d';
+
+//background
+[data-carousel-3d] {
+  background: linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  background: -ms-linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  background: -moz-linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  background: -webkit-linear-gradient(0deg, rgb(200,200,200), rgb(255,255,255), rgb(200,200,200));
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+  -ms-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#ffffff',GradientType=0 );
+}
+
+//border
+[data-carousel-3d] {
+  border: 3px solid #e0e0e0;
+}
+
+//next/prev
+[data-carousel-3d] {
+  [data-prev-button] {
+    &:before {
+      content: url("./images/default/prev.png");
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 43px;
+      height: 49px;
+      margin: auto;
+    }
+  }
+  [data-next-button] {
+    &:before {
+      content: url("./images/default/next.png");
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 43px;
+      height: 49px;
+      margin: auto;
+    }
+  }
+}
+
+[data-child-frame] {
+  border: 5px solid #ffffff;
+}

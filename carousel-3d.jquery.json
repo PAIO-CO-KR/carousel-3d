@@ -1,0 +1,28 @@
+{
+  "name": "carousel-3d",
+  "title": "carousel-3d",
+  "description": "Extremely easy 3D Carousel slider jQuery plugin supporting IE8, IE9",
+  "version": "0.2.0",
+  "homepage": "git://github.com/PAIO-CO-KR/carousel-3d.git",
+  "author": {
+    "name": "KyuWoo Choi",
+    "url": "https://github.com/kyuwoo-choi"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
+  },
+  "bugs": "",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.9"
+  },
+  "keywords": [
+    "jquery-plugin"
+  ]
+}

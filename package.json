@@ -1,0 +1,36 @@
+{
+  "name": "carousel-3d",
+  "version": "0.2.0",
+  "description": "carousel-3d",
+  "keywords": [
+    "jquery-plugin"
+  ],
+  "author": {
+    "name": "PAIO co.,Ltd.",
+    "email": "apple@paio.co.kr",
+    "url": "https://github.com/kyuwoo-choi"
+  },
+  "repository": "kyuwoo-choi/carousel-3d",
+  "license": "MIT",
+  "scripts": {
+    "test": "grunt"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "browserify-shim": "^3.8.3",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.5.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-compass": "^1.0.1",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-connect": "^0.9.0",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-qunit": "^0.5.1",
+    "grunt-contrib-uglify": "^0.7.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "jshint-stylish": "^1.0.0",
+    "load-grunt-tasks": "^2.0.0",
+    "time-grunt": "^1.0.0"
+  }
+}
