@@ -1,10 +1,11 @@
 {
   "name": "carousel-3d",
-  "main": "carousel-3d.js",
-  "version": "0.1.0",
-  "authors": [
-    "KyuWoo Choi <apple@paio.co.kr>"
-  ],
+  "version": "0.2.0",
+  "authors": [{
+    "name": "PAIO co.,Ltd.",
+    "email": "apple@paio.co.kr",
+    "url": "https://github.com/PAIO-CO-KR"
+  }],
   "license": "MIT",
   "ignore": [
     "**/.*",
@@ -14,13 +15,26 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~1.9.1",
-    "javascript-detect-element-resize": "~0.5.3",
-    "modernizr": "~2.8.3"
+    "jquery": ">=1.9",
+    "modernizr": "latest",
+    "waitForImages": "latest",
+    "javascript-detect-element-resize": "latest"
+  },
+  "devDependencies": {
+    "qunit": "~1.12.0",
+    "jquery": "~1.9",
+    "modernizr": "latest",
+    "waitForImages": "latest"
   },
   "homepage": "https://github.com/PAIO-CO-KR/carousel-3d",
   "repository": {
     "type": "git",
     "url": "git://github.com/PAIO-CO-KR/carousel-3d.git"
-  }
+  },
+  "keywords": [
+    "jquery-plugin",
+    "carousel",
+    "3d",
+    "slider"
+  ]
 }
