@@ -1,4 +1,7 @@
 # History
+### 0.2.0
+* re-engineer project
+
 ### 0.1.0
 * improved transforms
 * added theme feature

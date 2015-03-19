@@ -11,6 +11,7 @@
   var $ = window.jQuery;
 
   var ChildrenWrapper = function (carousel3dObj) {
+    this._childObjArray = [];
     this._carousel3dObj = carousel3dObj;
     this.el = $('<div data-children-wrapper></div>')[0];
     $(carousel3dObj.el).resize(this._resize.bind(this));

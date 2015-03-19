@@ -17,7 +17,8 @@ Thanks to [Sauce Labs](http://saucelabs.com), I confirmed carousel working on ab
 
 ## Demo
 
-[![demo image](http://paio-co-kr.github.io/carousel-3d/images/recent_browser.png)](http://paio-co-kr.github.io/carousel-3d)
+[![demo image](http://paio-co-kr.github.io/carousel-3d/images/recent_browser.png)
+](http://paio-co-kr.github.io/carousel-3d)
 [http://paio-co-kr.github.io/carousel-3d](http://paio-co-kr.github.io/carousel-3d)
 
 ## Installation
@@ -39,22 +40,22 @@ in header, add css theme and required js.
 ```html
 <link rel="stylesheet" href="../dist/styles/jquery.carousel-3d.default.css" />
 
-<script src="bower_components/jquery/jquery.js"></script>
-<script src="bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
+<script src="../bower_components/jquery/jquery.js"></script>
+<script src="../bower_components/javascript-detect-element-resize/jquery.resize.js"></script>
 <script src="../bower_components/waitForImages/dist/jquery.waitforimages.js"></script>
-<script src="bower_components/modernizr/modernizr.js"></script>
+<script src="../bower_components/modernizr/modernizr.js"></script>
 <script src="../dist/jquery.carousel-3d.js" ></script>
 ```
 
 in body
 ```html
 <div id="wrapper">
-    <div id="myCarousel" data-carousel-3d class="theme-default something">
-        <img src="./images/castles-616573_640.jpg" />
-        <img src="./images/cup-617422_640.jpg" selected />
-        <img src="./images/fresh-peppers-619132_640.jpg" />
-        <img src="./images/keyboard-621830_640.jpg" />
-        <img src="./images/landscape-540122_640.jpg" />
+    <div id="myCarousel" data-carousel-3d>
+        <img src="./images/1.jpg" />
+        <img src="./images/2.jpg" selected />
+        <img src="./images/3.jpg" />
+        <img src="./images/4.jpg" />
+        <img src="./images/5.jpg" />
     </div>
 </div>
 ```
@@ -62,7 +63,7 @@ in body
 * You will also want html document as child. wrap contents with a div.
 
 ```html
-<div style="min-width: 640px; min-height: 420px;">
+<div style="min-width: 640px; min-height: 420px; max-width: 640px; max-height: 420px;">
     <p style="background-color:black; color:white; margin:20px; padding:20px;">A simple html child</p>
     <div style="background-color:gray; color:white;">Html contents also works ok!!!</div>
     <div>The quick brown fox jumps over the lazy dog</div>
