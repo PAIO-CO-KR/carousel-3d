@@ -1,4 +1,7 @@
 # History
+### 0.2.1
+* bug fix : Multiple instances #4
+
 ### 0.2.0
 * re-engineer project
 
