@@ -1,4 +1,4 @@
-/*! carousel-3d - v0.2.0 - 2015-03-13
+/*! carousel-3d - v0.2.0 - 2015-03-20
 * Copyright (c) 2015 PAIO co.,Ltd.; Licensed MIT */
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /*
@@ -21,7 +21,7 @@
    * @param panel
    * @constructor
    */
-  var Carousel3d = function (carousel) {
+  var Carousel3d = function (carousel) { 
     this.el = carousel;
     this._makeOption();
 
@@ -275,6 +275,7 @@
   var $ = window.jQuery;
 
   var ChildrenWrapper = function (carousel3dObj) {
+    this._childObjArray = [];
     this._carousel3dObj = carousel3dObj;
     this.el = $('<div data-children-wrapper></div>')[0];
     $(carousel3dObj.el).resize(this._resize.bind(this));
