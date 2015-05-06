@@ -95,6 +95,10 @@ $('#myCarousel').on('select', function (evt, index) {
 
 
 ## History
+### 0.2.2
+* removed semi-NSFW image.
+* removed wrong js include in example html.
+
 ### 0.2.1
 * bug fix : Multiple instances #4
 
