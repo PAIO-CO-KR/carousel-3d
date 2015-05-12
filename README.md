@@ -17,9 +17,11 @@ Thanks to [Sauce Labs](http://saucelabs.com), I confirmed carousel working on ab
 
 ## Demo
 
+[http://paio-co-kr.github.io/carousel-3d](http://paio-co-kr.github.io/carousel-3d)
+
 [![demo image](http://paio-co-kr.github.io/carousel-3d/images/recent_browser.png)
 ](http://paio-co-kr.github.io/carousel-3d)
-[http://paio-co-kr.github.io/carousel-3d](http://paio-co-kr.github.io/carousel-3d)
+
 
 ## Installation
 
