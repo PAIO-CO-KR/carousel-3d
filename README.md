@@ -130,7 +130,7 @@ MIT © PAIO
 * iOS 사파리(ios5~)
 * 안드로이드 브라우저(?~)
 
-먼저 도움을 주신 <a href="http://saucelabs.com">Sauce Labs</a>에 먼저 감사의 말씀을 전해드리며, 케러셀-3D가 앞서 언급된 인터넷브라우저들의 버전에서 잘 작동하는 것이 확인 되었습니다. 제 생각에는 거의 모든 곳에서 잘 작동한다고 할 수 있습니다.
+먼저 도움을 주신 <a href="http://saucelabs.com">Sauce Labs</a>에 감사의 말씀을 전해드리며, 앞서 언급된 인터넷브라우저들의 버전에서 케러셀-3D가 잘 작동하는 것이 확인 되었습니다. 제 생각에는 거의 모든 곳에서 잘 작동한다고 할 수 있습니다.
 
 ## 데모
 
@@ -145,7 +145,7 @@ MIT © PAIO
 `bower install carousel-3d`
 
 ## 의존성
-케러셀-3d는 `jquery`, `javascript-detect-element-resize`, `modernizr`, `waitForImages`등의 모듈등의 도움이 필요합니다. 여러분들이 케러셀-3d.js를 HTML페이지 안에서 구현 하거나 또는 필요한 자바스크립트와 함께 실어 구현하거나 또는 UMD 스타일 모듈 정의에 따른 케러셀-3d를 구현하고 싶다면 앞서 언급한 스크립트들이 필요 할 것입니다.
+케러셀-3d는 `jquery`, `javascript-detect-element-resize`, `modernizr`, `waitForImages`등 과 같은 모듈들의 도움이 필요합니다. 여러분들이 케러셀-3d.js를 HTML페이지 안에서 구현 하거나 또는 필요한 자바스크립트와 함께 실어 구현하거나, 또는 UMD 스타일 모듈 정의에 따른 케러셀-3d를 구현하고 싶다면 앞서 언급한 스크립트들이 필요 할 것입니다.
 
 ## 코드 예시
 * **정말 쉬워요! 자바스크립트 코드를 몰라도 됩니다.**
@@ -193,7 +193,7 @@ body 태그 안에
 ```
 케러셀은 100% width & aspect height 를 부모요소로 가집니다. 그래서 div를 적당한 크기로 감쌀 필요가 있습니다. 그리고 3d 선회 효과는 wide aspect(3:2, 2:1 ...)정도를 추천드립니다.
 
- multiple carousels을 구현하고 싶다면 간단하게 proper attribues를 설정해 주는 것만으로 여러분이 원하는 대로 쉽게 구현 할 수 있습니다. 
+Multiple Carousels을 구현하고 싶다면 간단하게 proper attribues를 설정해 주는 것만으로 여러분이 원하는 대로 쉽게 구현 할 수 있습니다. 
 
 ## API 참조
 * prev / next 케러셀 순환
@@ -215,7 +215,7 @@ $('#myCarousel').on('select', function (evt, index) {
 
 ## 히스토리
 ### 0.2.2
-* removed semi-NSFW image 삭제됨.
+* semi-NSFW image 삭제됨.
 * 예제 html 에서 잘못된 js 코드 삭제됨.
 
 ### 0.2.1
