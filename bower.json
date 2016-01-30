@@ -1,6 +1,7 @@
 {
   "name": "carousel-3d",
   "version": "0.2.2",
+  "main": "dist/jquery.carousel-3d.js",
   "authors": [{
     "name": "PAIO co.,Ltd.",
     "email": "apple@paio.co.kr",
