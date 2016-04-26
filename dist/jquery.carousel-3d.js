@@ -336,8 +336,6 @@
    * @param index|selector(string)|element|jQuery instance of element
    */
   ChildrenWrapper.prototype.removeChild = function (index) {
-	  console.log(index);
-	  console.log(this._childObjArray);
     function isInt(value) {
 	  return !isNaN(value) && 
 	  parseInt(Number(value)) == value && 
