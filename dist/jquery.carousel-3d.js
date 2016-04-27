@@ -86,6 +86,14 @@
 
   };
 
+	
+  /**
+   * remove chlid
+   * @param index|selector(string)|element|jQuery instance of element
+   */
+  Carousel3d.prototype.removeChild = function (index) {
+    this._childrenWrapperObj.removeChild(index);
+  };
 
   /**
    * append chlid
@@ -320,6 +328,51 @@
     $(this.el).append(childObj.el);
 
     this._resize();
+  };
+	
+	
+  /**
+   * remove Child object
+   * @param index|selector(string)|element|jQuery instance of element
+   */
+  ChildrenWrapper.prototype.removeChild = function (index) {
+    function isInt(value) {
+	  return !isNaN(value) && 
+	  parseInt(Number(value)) == value && 
+	  !isNaN(parseInt(value, 10));
+	}
+	  
+	if(isInt(index)){
+		if(index in this._childObjArray){
+			var child = this._childObjArray[index];
+			$(child.el).remove();
+			this._childObjArray.splice(index,1);
+			this._resize();
+			return true;
+		}else{
+			return false;
+		}
+	}else{
+		var ele = null;
+		if(typeof index == "string"){
+			ele = $(index).get();
+		}
+		if(typeof index == "object"){
+			if(index instanceof jQuery) ele = index.get();
+			else ele = index;
+		}
+		if(ele != null){
+			$(this._childObjArray).each(function(i,e){
+				if(e._content == ele){
+					var child = this._childObjArray[i];
+					$(child.el).remove();
+					this._childObjArray.splice(i,1);
+					this._resize();
+					return true;
+				}
+			});
+		}else return false;
+	}
   };
 
 
