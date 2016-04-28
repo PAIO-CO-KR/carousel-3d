@@ -409,6 +409,13 @@
 
         $(this._childObjArray[childIndex].el).css('opacity', Math.cos(Math.PI / 180 * childDegree));
         $(this._childObjArray[childIndex].el).css('z-index', Math.floor((Math.cos(Math.PI / 180 * childDegree) + 1) * 100));
+		  
+		
+		var i = index < 0 ? (index < (this._childObjArray.length)*(-1) ? this._childObjArray.length - (index*(-1) % this._childObjArray.length) : this._childObjArray.length + index) : index;
+		childIndex == (i > this._childObjArray.length-1 ? i % this._childObjArray.length : i) ?
+		  $(this._childObjArray[childIndex].el).attr("data-child-active",true) :
+		  $(this._childObjArray[childIndex].el).removeAttr("data-child-active") ;
+		
       }
     }
     else {
@@ -452,7 +459,12 @@
         }, {
           duration: this._carousel3dObj.option.animationDuration,
           step: stepFunc.bind(this)
-        });
+        }, function(){
+		  var i = index < 0 ? (index < (this._childObjArray.length)*(-1) ? this._childObjArray.length - (index*(-1) % this._childObjArray.length) : this._childObjArray.length + index) : index;
+		  childIndex == (i > this._childObjArray.length-1 ? i % this._childObjArray.length : i) ?
+		    $(this._childObjArray[childIndex].el).attr("data-child-active",true) :
+		    $(this._childObjArray[childIndex].el).removeAttr("data-child-active") ;
+		});
       }
     }
 
