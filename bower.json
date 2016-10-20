@@ -17,14 +17,14 @@
   ],
   "dependencies": {
     "jquery": ">=1.9",
-    "modernizr": "latest",
+    "modernizr": "~2.8",
     "waitForImages": "latest",
     "javascript-detect-element-resize": "latest"
   },
   "devDependencies": {
     "qunit": "~1.12.0",
     "jquery": "~1.9",
-    "modernizr": "latest",
+    "modernizr": "~2.8",
     "waitForImages": "latest"
   },
   "homepage": "https://github.com/PAIO-CO-KR/carousel-3d",
