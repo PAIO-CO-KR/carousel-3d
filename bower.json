@@ -1,6 +1,6 @@
 {
   "name": "carousel-3d",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "dist/jquery.carousel-3d.js",
   "authors": [{
     "name": "PAIO co.,Ltd.",
